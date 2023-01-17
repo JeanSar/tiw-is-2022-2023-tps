@@ -1,4 +1,4 @@
-image: maven:3-jdk-11
+image: maven:3-eclipse-temurin-17-focal
 
 # Maven configuration from https://gitlab.com/gitlab-org/gitlab-ce/blob/master/lib/gitlab/ci/templates/Maven.gitlab-ci.yml
 variables:
