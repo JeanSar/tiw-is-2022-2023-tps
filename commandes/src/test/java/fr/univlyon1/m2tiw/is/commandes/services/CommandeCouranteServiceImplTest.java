@@ -5,13 +5,15 @@ import fr.univlyon1.m2tiw.is.commandes.model.Commande;
 import fr.univlyon1.m2tiw.is.commandes.model.Voiture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CommandeCouranteServiceImplTest {
-
+    private static Logger log = LoggerFactory.getLogger(CommandeCouranteServiceImplTest.class);
     private static int counter = 0;
     private VoitureService voitureService;
     private CommandeCouranteServiceImpl commandeCouranteService;
@@ -57,8 +59,11 @@ class CommandeCouranteServiceImplTest {
         Commande c = commandeCouranteService.creerCommandeCourante();
         Voiture v = createVoiture();
         commandeCouranteService.ajouterVoiture(v.getId());
-        assertTrue(1 >= commandeCouranteService.getAllVoitures().size());
-        assertTrue(commandeCouranteService.getAllVoitures().stream().anyMatch(v2 -> (v2.getId() == v.getId())));
+        var voitures = commandeCouranteService.getAllVoitures();
+        assertTrue(1 >= voitures.size());
+        log.debug("Voitures: {}",voitures);
+        log.debug("v: {}",v);
+        assertTrue(voitures.stream().anyMatch(v2 -> (v2.getId().equals(v.getId()))));
         commandeCouranteService.supprimerVoiture(v.getId());
     }
 

@@ -44,11 +44,14 @@ public class CommandeCouranteServiceImpl implements CommandeCouranteService {
 
     @Override
     public Commande getCommandeCourante() {
+        if (commandeCourante == null) {
+            creerCommandeCourante();
+        }
         return commandeCourante;
     }
 
     @Override
-    public void validerCommandeCourante() throws EmptyCommandeException, SQLException, NotFoundException {
+    public long validerCommandeCourante() throws EmptyCommandeException, SQLException, NotFoundException {
         if (commandeCourante.getVoitures().size() == 0)
             throw new EmptyCommandeException("Commande vide");
         commandeCourante.setFerme(true);
@@ -56,6 +59,8 @@ public class CommandeCouranteServiceImpl implements CommandeCouranteService {
         for (Voiture voiture : commandeCourante.getVoitures()) {
             voitureService.sauverVoiture(voiture.getId(), commandeCourante);
         }
+        long id = commandeCourante.getId();
         creerCommandeCourante(); // On repart avec un nouveau panier vide
+        return id;
     }
 }

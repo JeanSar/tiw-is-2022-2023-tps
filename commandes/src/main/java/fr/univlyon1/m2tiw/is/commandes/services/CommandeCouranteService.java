@@ -13,5 +13,5 @@ public interface CommandeCouranteService {
     public void supprimerVoiture(Long voitureId) throws NotFoundException, SQLException;
     public Collection<Voiture> getAllVoitures();
     public Commande getCommandeCourante();
-    public void validerCommandeCourante() throws EmptyCommandeException, SQLException, NotFoundException;
+    public long validerCommandeCourante() throws EmptyCommandeException, SQLException, NotFoundException;
 }

@@ -64,4 +64,9 @@ public class Voiture {
     public Collection<Option> getOptions() {
         return options.values();
     }
+
+    @Override
+    public String toString() {
+        return "Voiture id="+getId();
+    }
 }
