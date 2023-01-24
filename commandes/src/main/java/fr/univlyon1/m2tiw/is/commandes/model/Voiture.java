@@ -16,6 +16,10 @@ public class Voiture {
         this.options = new HashMap<>();
     }
 
+    public Voiture(String modele) {
+        this.modele = modele;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

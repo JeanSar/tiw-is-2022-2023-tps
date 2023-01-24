@@ -34,6 +34,7 @@ public class CommandeCouranteServiceImpl implements CommandeCouranteService {
     @Override
     public void supprimerVoiture(Long voitureId) throws SQLException, NotFoundException {
         this.commandeCourante.removeVoiture(voitureService.getVoiture(voitureId));
+        this.voitureService.supprimerVoiture(voitureId);
     }
 
     @Override

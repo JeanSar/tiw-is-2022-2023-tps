@@ -17,6 +17,7 @@ public class VoitureDAOImpl extends AbstractSQLDAO implements VoitureDAO {
     private PreparedStatement deleteStatement = null;
     private PreparedStatement getByCommandeStatement = null;
     private PreparedStatement updateCommandeStatement = null;
+    private PreparedStatement insertStatementNoCmd;
 
     @Override
     protected void setupTable(Connection connection) throws SQLException {
@@ -30,6 +31,7 @@ public class VoitureDAOImpl extends AbstractSQLDAO implements VoitureDAO {
     @Override
     protected void initStatements(Connection connection) throws SQLException {
         insertStatement = connection.prepareStatement("INSERT INTO voiture(modele, commande) VALUES (?,?) returning id");
+        insertStatementNoCmd = connection.prepareStatement("INSERT INTO voiture(modele, commande) VALUES (?,NULL) returning id");
         getByIdStatement = connection.prepareStatement("SELECT modele, commande FROM voiture WHERE id = ?");
         getByCommandeStatement = connection.prepareStatement("SELECT id, modele FROM voiture WHERE commande = ?");
         updateStatement = connection.prepareStatement("UPDATE voiture SET modele = ?  WHERE id = ?");
@@ -43,6 +45,18 @@ public class VoitureDAOImpl extends AbstractSQLDAO implements VoitureDAO {
         insertStatement.setString(1, voiture.getModele());
         insertStatement.setLong(2, commandeId);
         ResultSet rs = insertStatement.executeQuery();
+        if (rs.next()) {
+            voiture.setId(rs.getLong(1));
+            return voiture;
+        } else {
+            throw new SQLException("Failed to create voiture");
+        }
+    }
+
+    @Override
+    public Voiture saveVoiture(Voiture voiture) throws SQLException {
+        insertStatementNoCmd.setString(1, voiture.getModele());
+        ResultSet rs = insertStatementNoCmd.executeQuery();
         if (rs.next()) {
             voiture.setId(rs.getLong(1));
             return voiture;
