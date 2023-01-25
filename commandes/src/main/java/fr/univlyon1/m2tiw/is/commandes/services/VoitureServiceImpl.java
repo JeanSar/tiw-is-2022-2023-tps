@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.util.Collection;
 
 public class VoitureServiceImpl implements VoitureService {
-    private static Long currentId = 0L;
     private final VoitureDAO voitureDAO = new VoitureDAOImpl(); // TODO: Inject
     private final OptionDAO optionDAO = new OptionDAOImpl(); // TODO: inject
 
@@ -19,8 +18,8 @@ public class VoitureServiceImpl implements VoitureService {
     }
 
     @Override
-    public Voiture creerVoiture(String modele) {
-        return new Voiture(currentId++, modele);
+    public Voiture creerVoiture(String modele) throws SQLException {
+        return voitureDAO.saveVoiture(new Voiture(modele));
     }
 
     @Override
@@ -67,5 +66,10 @@ public class VoitureServiceImpl implements VoitureService {
             }
         }
         return voitures;
+    }
+
+    @Override
+    public void supprimerVoiture(Long voitureId) throws SQLException, NotFoundException {
+        voitureDAO.deleteVoiture(voitureDAO.getVoitureById(voitureId));
     }
 }
