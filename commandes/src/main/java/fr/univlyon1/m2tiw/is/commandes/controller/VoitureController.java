@@ -39,6 +39,14 @@ public class VoitureController {
         }
     }
 
+    public void supprimerConfiguration(Voiture voiture, Option option) throws SQLException, NotFoundException {
+        try {
+            voitureService.supprimerConfiguration(voiture.getId(), option);
+        }catch (SQLException | NotFoundException e){
+            e.printStackTrace();
+        }
+    }
+
     public void supprimerVoiture(Voiture voiture) throws SQLException, NotFoundException {
         voitureService.supprimerVoiture(voiture.getId());
     }
