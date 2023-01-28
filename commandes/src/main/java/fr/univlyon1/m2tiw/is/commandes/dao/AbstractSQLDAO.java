@@ -13,8 +13,17 @@ import java.sql.SQLException;
 public abstract class AbstractSQLDAO {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractSQLDAO.class);
 
-    private final DBAccess dbAccess = new DBAccess(); // TODO: inject
+    private final DBAccess dbAccess;
     private Connection currentConnection = null;
+
+    public AbstractSQLDAO() {
+        dbAccess = new DBAccess();
+    }
+
+    public AbstractSQLDAO(DBAccess _dbAccess) {
+        dbAccess = _dbAccess;
+    }
+
 
     /**
      * Initialize table and statements.
