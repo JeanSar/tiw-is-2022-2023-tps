@@ -1,6 +1,7 @@
 package fr.univlyon1.m2tiw.is.commandes.dao;
 
 import fr.univlyon1.m2tiw.is.commandes.model.Voiture;
+import fr.univlyon1.m2tiw.is.commandes.services.DBAccess;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +20,13 @@ public class VoitureDAOImpl extends AbstractSQLDAO implements VoitureDAO {
     private PreparedStatement updateCommandeStatement = null;
     private PreparedStatement insertStatementNoCmd;
 
+    public VoitureDAOImpl() {
+        super();
+    }
+
+    public VoitureDAOImpl(DBAccess _dbAccess) {
+        super(_dbAccess);
+    }
     @Override
     protected void setupTable(Connection connection) throws SQLException {
         Statement stat = connection.createStatement();

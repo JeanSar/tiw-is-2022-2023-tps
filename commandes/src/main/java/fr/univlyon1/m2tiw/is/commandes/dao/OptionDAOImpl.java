@@ -1,6 +1,7 @@
 package fr.univlyon1.m2tiw.is.commandes.dao;
 
 import fr.univlyon1.m2tiw.is.commandes.model.Option;
+import fr.univlyon1.m2tiw.is.commandes.services.DBAccess;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,6 +14,14 @@ public class OptionDAOImpl extends AbstractSQLDAO implements OptionDAO {
     private PreparedStatement getOptionsForVoitureStatement = null;
     private PreparedStatement deleteOptionForVoitureStatement;
     private PreparedStatement addOptionForVoitureStatement;
+
+    public OptionDAOImpl() {
+        super();
+    }
+
+    public OptionDAOImpl(DBAccess _dbAccess) {
+        super(_dbAccess);
+    }
 
     @Override
     protected void initStatements(Connection connection) throws SQLException {

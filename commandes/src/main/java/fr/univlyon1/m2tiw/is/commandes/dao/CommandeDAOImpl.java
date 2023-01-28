@@ -1,6 +1,7 @@
 package fr.univlyon1.m2tiw.is.commandes.dao;
 
 import fr.univlyon1.m2tiw.is.commandes.model.Commande;
+import fr.univlyon1.m2tiw.is.commandes.services.DBAccess;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +16,14 @@ public class CommandeDAOImpl extends AbstractSQLDAO implements CommandeDAO {
     private PreparedStatement getStatement;
     private PreparedStatement updateStatement;
     private PreparedStatement deleteStatement;
+
+    public CommandeDAOImpl() {
+        super();
+    }
+
+    public CommandeDAOImpl(DBAccess _dbAccess) {
+        super(_dbAccess);
+    }
 
     @Override
     protected void initStatements(Connection connection) throws SQLException {

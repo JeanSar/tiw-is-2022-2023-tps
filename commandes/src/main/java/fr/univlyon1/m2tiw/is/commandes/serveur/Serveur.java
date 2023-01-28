@@ -22,10 +22,13 @@ public class Serveur {
 
     public Serveur() {
         try {
+            // Acces à la base de données
+            DBAccess dbAccess = new DBAccess();
+
             // Instantiation des DAO
-            OptionDAO optionDAO = new OptionDAOImpl();
-            VoitureDAO voitureDAO = new VoitureDAOImpl();
-            CommandeDAO commandeDAO = new CommandeDAOImpl();
+            OptionDAO optionDAO = new OptionDAOImpl(dbAccess);
+            VoitureDAO voitureDAO = new VoitureDAOImpl(dbAccess);
+            CommandeDAO commandeDAO = new CommandeDAOImpl(dbAccess);
 
             // Initialisation des DAO
             optionDAO.init();
