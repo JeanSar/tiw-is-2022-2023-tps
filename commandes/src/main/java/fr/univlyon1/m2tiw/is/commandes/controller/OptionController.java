@@ -1,15 +1,14 @@
 package fr.univlyon1.m2tiw.is.commandes.controller;
 
-import fr.univlyon1.m2tiw.is.commandes.model.Option;
 import fr.univlyon1.m2tiw.is.commandes.services.OptionService;
 import fr.univlyon1.m2tiw.is.commandes.services.OptionServiceImpl;
-import fr.univlyon1.m2tiw.is.commandes.services.VoitureService;
+import fr.univlyon1.m2tiw.is.commandes.vue.Vue;
 
 import java.sql.SQLException;
-import java.util.Collection;
 
 public class OptionController {
     private OptionService optionService;
+    private final Vue vue = new Vue();
     public OptionController() {
         try {
             optionService = new OptionServiceImpl();
@@ -20,13 +19,16 @@ public class OptionController {
     public OptionController(OptionService _optionService) {
         optionService =  _optionService;
     }
-    public Collection<Option> getAllOptions() {
+    /**
+     * @return String JSON des options
+     */
+    public String getAllOptions() {
         try {
-            return optionService.getAllOptions();
+            return vue.render(optionService.getAllOptions());
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return vue.render();
     }
 
 }

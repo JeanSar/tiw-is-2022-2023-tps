@@ -5,13 +5,11 @@ import fr.univlyon1.m2tiw.is.commandes.controller.CommandeController;
 import fr.univlyon1.m2tiw.is.commandes.controller.OptionController;
 import fr.univlyon1.m2tiw.is.commandes.controller.VoitureController;
 import fr.univlyon1.m2tiw.is.commandes.dao.*;
-import fr.univlyon1.m2tiw.is.commandes.model.Commande;
 import fr.univlyon1.m2tiw.is.commandes.model.Option;
 import fr.univlyon1.m2tiw.is.commandes.model.Voiture;
 import fr.univlyon1.m2tiw.is.commandes.services.*;
 
 import java.sql.SQLException;
-import java.util.Collection;
 
 public class Serveur {
 
@@ -53,11 +51,11 @@ public class Serveur {
         }
     }
 
-    public Collection<Option> getAllOptions() {
+    public String getAllOptions() {
         return optionController.getAllOptions();
     }
 
-    public Voiture creerVoiture(String modele) {
+    public String creerVoiture(String modele) {
         return voitureController.creerVoiture(modele);
     }
 
@@ -79,7 +77,7 @@ public class Serveur {
         return commandeController.validerCommandeCourante();
     }
 
-    public Commande getCommande(Long id) {
+    public String getCommande(Long id) {
         return commandeController.getCommande(id);
     }
 }

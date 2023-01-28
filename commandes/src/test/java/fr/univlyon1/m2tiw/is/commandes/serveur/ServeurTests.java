@@ -19,7 +19,7 @@ class ServeurTests {
     @Test
     public void getAllOptions() {
         var options = serveur.getAllOptions();
-        assertTrue(1 > options.size());
+        assertNotSame("", options);
     }
 
 }

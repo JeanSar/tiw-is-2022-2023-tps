@@ -1,16 +1,16 @@
 package fr.univlyon1.m2tiw.is.commandes.controller;
 
-import fr.univlyon1.m2tiw.is.commandes.dao.CommandeDAO;
-import fr.univlyon1.m2tiw.is.commandes.dao.CommandeDAOImpl;
 import fr.univlyon1.m2tiw.is.commandes.dao.NotFoundException;
-import fr.univlyon1.m2tiw.is.commandes.model.Commande;
 import fr.univlyon1.m2tiw.is.commandes.services.*;
+import fr.univlyon1.m2tiw.is.commandes.vue.Vue;
 
 import java.sql.SQLException;
 
 public class CommandeController {
     private GestionCommandeService gestionCommandeService;
     private CommandeCouranteService commandeCouranteService;
+    private final Vue vue = new Vue();
+
     public CommandeController() {
         try {
             commandeCouranteService = new CommandeCouranteServiceImpl();
@@ -48,14 +48,17 @@ public class CommandeController {
         }
         return -1;
     }
-
-    public Commande getCommande(Long id) {
+    /**
+     * @param id
+     * @return String JSON de la commande
+     */
+    public String getCommande(Long id) {
         try {
-            return gestionCommandeService.getCommande(id);
+            return vue.render(gestionCommandeService.getCommande(id));
         } catch (SQLException | NotFoundException e) {
             e.printStackTrace();
         }
-        return null;
+        return vue.render();
     }
 
 
