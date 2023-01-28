@@ -2,16 +2,13 @@ package fr.univlyon1.m2tiw.is.commandes.controller;
 
 import fr.univlyon1.m2tiw.is.commandes.dao.NotFoundException;
 import fr.univlyon1.m2tiw.is.commandes.model.Commande;
-import fr.univlyon1.m2tiw.is.commandes.model.Voiture;
-import fr.univlyon1.m2tiw.is.commandes.services.CommandeCouranteServiceImpl;
-import fr.univlyon1.m2tiw.is.commandes.services.EmptyCommandeException;
-import fr.univlyon1.m2tiw.is.commandes.services.GestionCommandeServiceImpl;
+import fr.univlyon1.m2tiw.is.commandes.services.*;
 
 import java.sql.SQLException;
 
 public class CommandeController {
-    private GestionCommandeServiceImpl gestionCommandeService;
-    private CommandeCouranteServiceImpl commandeCouranteService;
+    private GestionCommandeService gestionCommandeService;
+    private CommandeCouranteService commandeCouranteService;
 
     public CommandeController() {
         try {
@@ -39,8 +36,7 @@ public class CommandeController {
     }
     public long validerCommandeCourante()  {
         try {
-            long id = commandeCouranteService.validerCommandeCourante();
-            return id;
+            return commandeCouranteService.validerCommandeCourante();
         } catch (EmptyCommandeException | SQLException | NotFoundException e) {
             e.printStackTrace();
         }
@@ -49,8 +45,7 @@ public class CommandeController {
 
     public Commande getCommande(Long id) {
         try {
-            Commande commande = gestionCommandeService.getCommande(id);
-            return commande;
+            return gestionCommandeService.getCommande(id);
         } catch (SQLException | NotFoundException e) {
             e.printStackTrace();
         }
