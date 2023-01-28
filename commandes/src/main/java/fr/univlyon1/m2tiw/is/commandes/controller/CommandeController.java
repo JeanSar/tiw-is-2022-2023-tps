@@ -1,5 +1,7 @@
 package fr.univlyon1.m2tiw.is.commandes.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.univlyon1.m2tiw.is.commandes.dao.NotFoundException;
 import fr.univlyon1.m2tiw.is.commandes.services.*;
 import fr.univlyon1.m2tiw.is.commandes.vue.Vue;
@@ -25,37 +27,43 @@ public class CommandeController {
         gestionCommandeService = _gestionCommandeService;
     }
 
-    public void ajouterVoiture(Long voitureId) {
+    public void ajouterVoiture(String voitureIdJSON) {
+        ObjectMapper mapper = new ObjectMapper();
         try {
-            commandeCouranteService.ajouterVoiture(voitureId);
-        } catch (SQLException | NotFoundException e) {
+            Long id = mapper.readValue(voitureIdJSON, Long.class);
+            commandeCouranteService.ajouterVoiture(id);
+        } catch (SQLException | NotFoundException | JsonProcessingException e) {
             e.printStackTrace();
         }
     }
 
-    public void supprimerVoiture(Long voitureId) {
+    public void supprimerVoiture(String voitureIdJSON) {
+        ObjectMapper mapper = new ObjectMapper();
         try {
-            commandeCouranteService.supprimerVoiture(voitureId);
-        }  catch (SQLException | NotFoundException e) {
+            Long id = mapper.readValue(voitureIdJSON, Long.class);
+            commandeCouranteService.supprimerVoiture(id);
+        }  catch (SQLException | NotFoundException | JsonProcessingException e) {
             e.printStackTrace();
         }
     }
-    public long validerCommandeCourante()  {
+    public String validerCommandeCourante()  {
         try {
-            return commandeCouranteService.validerCommandeCourante();
+            return vue.render(commandeCouranteService.validerCommandeCourante());
         } catch (EmptyCommandeException | SQLException | NotFoundException e) {
             e.printStackTrace();
         }
-        return -1;
+        return vue.render();
     }
     /**
-     * @param id
+     * @param commandeIdJSON
      * @return String JSON de la commande
      */
-    public String getCommande(Long id) {
+    public String getCommande(String commandeIdJSON) {
+        ObjectMapper mapper = new ObjectMapper();
         try {
+            Long id = mapper.readValue(commandeIdJSON, Long.class);
             return vue.render(gestionCommandeService.getCommande(id));
-        } catch (SQLException | NotFoundException e) {
+        } catch (SQLException | NotFoundException | JsonProcessingException e) {
             e.printStackTrace();
         }
         return vue.render();

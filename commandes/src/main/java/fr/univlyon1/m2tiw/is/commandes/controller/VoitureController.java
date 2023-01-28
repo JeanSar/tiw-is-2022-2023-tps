@@ -1,4 +1,6 @@
 package fr.univlyon1.m2tiw.is.commandes.controller;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.univlyon1.m2tiw.is.commandes.dao.NotFoundException;
 import fr.univlyon1.m2tiw.is.commandes.model.Option;
 import fr.univlyon1.m2tiw.is.commandes.model.Voiture;
@@ -25,30 +27,41 @@ public class VoitureController {
     }
 
     /**
-     * @param modele
+     * @param modeleJSON modèle en JSON
      * @return String JSON de la voiture créée
      */
-    public String creerVoiture(String modele){
+    public String creerVoiture(String modeleJSON){
+        ObjectMapper mapper = new ObjectMapper();
         try{
+            String modele = mapper.readValue(modeleJSON, String.class);
             return vue.render(voitureService.creerVoiture(modele));
-        } catch (SQLException e){
+        } catch (SQLException | JsonProcessingException e){
             e.printStackTrace();
         }
          return vue.render();
     }
 
-    public void ajouterConfiguration(Voiture voiture, Option option) {
+    public void ajouterConfiguration(String voitureJSON, String optionJSON) {
+        ObjectMapper mapper = new ObjectMapper();
         try{
+            Voiture voiture = mapper.readValue(voitureJSON, Voiture.class);
+            Option option = mapper.readValue(optionJSON, Option.class);
             voitureService.ajouterConfiguration(voiture.getId(), option);
-        }catch (SQLException | NotFoundException e) {
+        }catch (SQLException | NotFoundException | JsonProcessingException e) {
             e.printStackTrace();
         }
     }
 
-    public void supprimerConfiguration(Voiture voiture, Option option) {
+    public void supprimerConfiguration(String voitureJSON, String optionJSON) {
+        ObjectMapper mapper = new ObjectMapper();
         try {
+            Voiture voiture = mapper.readValue(voitureJSON, Voiture.class);
+            Option option = mapper.readValue(optionJSON, Option.class);
             voitureService.supprimerConfiguration(voiture.getId(), option);
-        }catch (InvalidConfigurationException | SQLException | NotFoundException e){
+        }catch (InvalidConfigurationException
+                | SQLException
+                | NotFoundException
+                | JsonProcessingException e){
             e.printStackTrace();
         }
     }

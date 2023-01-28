@@ -8,7 +8,7 @@ import java.util.Collection;
 
 public class Vue {
     public String render() {
-        return "{}";
+        return "";
     }
 
     public String render(Commande commande) {
@@ -35,6 +35,16 @@ public class Vue {
         ObjectMapper mapper = new ObjectMapper();
         try {
             return mapper.writeValueAsString(options);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return render();
+    }
+
+    public String render(long id) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writeValueAsString(id);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

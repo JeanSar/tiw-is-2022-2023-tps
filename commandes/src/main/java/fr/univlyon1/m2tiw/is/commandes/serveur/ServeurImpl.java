@@ -5,20 +5,18 @@ import fr.univlyon1.m2tiw.is.commandes.controller.CommandeController;
 import fr.univlyon1.m2tiw.is.commandes.controller.OptionController;
 import fr.univlyon1.m2tiw.is.commandes.controller.VoitureController;
 import fr.univlyon1.m2tiw.is.commandes.dao.*;
-import fr.univlyon1.m2tiw.is.commandes.model.Option;
-import fr.univlyon1.m2tiw.is.commandes.model.Voiture;
 import fr.univlyon1.m2tiw.is.commandes.services.*;
 
 import java.sql.SQLException;
 
-public class Serveur {
+public class ServeurImpl {
 
     private OptionController optionController;
     private VoitureController voitureController;
     private CommandeController commandeController;
 
 
-    public Serveur() {
+    public ServeurImpl() {
         try {
             // Acces à la base de données
             DBAccess dbAccess = new DBAccess();
@@ -59,25 +57,25 @@ public class Serveur {
         return voitureController.creerVoiture(modele);
     }
 
-    public void ajouterConfiguration(Voiture voiture, Option option) {
+    public void ajouterConfiguration(String voiture, String option) {
         voitureController.ajouterConfiguration(voiture, option);
     }
 
-    public void supprimerConfiguration(Voiture voiture, Option option) {
+    public void supprimerConfiguration(String voiture, String option) {
         voitureController.supprimerConfiguration(voiture, option);
     }
-    public void ajouterVoiture(Long voitureId) {
+    public void ajouterVoiture(String voitureId) {
         commandeController.ajouterVoiture(voitureId);
     }
 
-    public void supprimerVoiture(Long voitureId) {
+    public void supprimerVoiture(String voitureId) {
         commandeController.supprimerVoiture(voitureId);
     }
-    public long validerCommandeCourante()  {
+    public String validerCommandeCourante()  {
         return commandeController.validerCommandeCourante();
     }
 
-    public String getCommande(Long id) {
+    public String getCommande(String id) {
         return commandeController.getCommande(id);
     }
 }
