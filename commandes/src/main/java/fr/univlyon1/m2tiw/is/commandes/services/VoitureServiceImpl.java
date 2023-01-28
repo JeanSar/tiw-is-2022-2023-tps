@@ -9,12 +9,18 @@ import java.sql.SQLException;
 import java.util.Collection;
 
 public class VoitureServiceImpl implements VoitureService {
-    private final VoitureDAO voitureDAO = new VoitureDAOImpl(); // TODO: Inject
-    private final OptionDAO optionDAO = new OptionDAOImpl(); // TODO: inject
+    private final VoitureDAO voitureDAO;
+    private final OptionDAO optionDAO;
 
     public VoitureServiceImpl() throws SQLException {
+        voitureDAO = new VoitureDAOImpl();
+        optionDAO = new OptionDAOImpl();
         voitureDAO.init();
         optionDAO.init();
+    }
+    public VoitureServiceImpl(VoitureDAO _voitureDAO, OptionDAO _optionDAO) throws SQLException {
+        voitureDAO = _voitureDAO;
+        optionDAO = _optionDAO;
     }
 
     @Override

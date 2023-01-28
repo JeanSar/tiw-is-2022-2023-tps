@@ -17,6 +17,10 @@ public class VoitureController {
         }
     }
 
+    public VoitureController(VoitureService _voitureService) {
+        voitureService = _voitureService;
+    }
+
     public Voiture creerVoiture(String modele){
         try{
             return voitureService.creerVoiture(modele);

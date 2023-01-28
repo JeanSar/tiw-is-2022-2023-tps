@@ -1,5 +1,7 @@
 package fr.univlyon1.m2tiw.is.commandes.controller;
 
+import fr.univlyon1.m2tiw.is.commandes.dao.CommandeDAO;
+import fr.univlyon1.m2tiw.is.commandes.dao.CommandeDAOImpl;
 import fr.univlyon1.m2tiw.is.commandes.dao.NotFoundException;
 import fr.univlyon1.m2tiw.is.commandes.model.Commande;
 import fr.univlyon1.m2tiw.is.commandes.services.*;
@@ -9,14 +11,18 @@ import java.sql.SQLException;
 public class CommandeController {
     private GestionCommandeService gestionCommandeService;
     private CommandeCouranteService commandeCouranteService;
-
     public CommandeController() {
         try {
-            gestionCommandeService = new GestionCommandeServiceImpl();
             commandeCouranteService = new CommandeCouranteServiceImpl();
+            gestionCommandeService = new GestionCommandeServiceImpl();
         } catch(SQLException e) {
             e.printStackTrace();
         }
+    }
+    public CommandeController(CommandeCouranteService _commandeCouranteService,
+                              GestionCommandeService _gestionCommandeService) {
+        commandeCouranteService = _commandeCouranteService;
+        gestionCommandeService = _gestionCommandeService;
     }
 
     public void ajouterVoiture(Long voitureId) {

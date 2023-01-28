@@ -14,11 +14,19 @@ public class GestionCommandeServiceImpl implements GestionCommandeService {
     private final CommandeDAO commandeDAO;
 
     public GestionCommandeServiceImpl() throws SQLException {
-        commandeCouranteService = new CommandeCouranteServiceImpl(); // TODO: Inject
-        optionService= new OptionServiceImpl(); // TODO: Inject
-        voitureService = new VoitureServiceImpl(); // TODO: Inject
-        commandeDAO = new CommandeDAOImpl(); // TODO: Inject
+        commandeCouranteService = new CommandeCouranteServiceImpl();
+        optionService= new OptionServiceImpl();
+        voitureService = new VoitureServiceImpl();
+        commandeDAO = new CommandeDAOImpl();
         commandeDAO.init();
+    }
+    public GestionCommandeServiceImpl(CommandeCouranteService _commandeCouranteService,
+                                      OptionService _optionService, VoitureService _voitureService,
+                                      CommandeDAO _commandeDAO) {
+        commandeCouranteService = _commandeCouranteService;
+        optionService= _optionService;
+        voitureService = _voitureService;
+        commandeDAO = _commandeDAO;
     }
 
     @Override

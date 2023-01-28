@@ -15,9 +15,13 @@ public class CommandeCouranteServiceImpl implements CommandeCouranteService {
     private final VoitureService voitureService;
 
     public CommandeCouranteServiceImpl() throws SQLException {
-        voitureService = new VoitureServiceImpl(); // TODO: Inject
-        commandeDAO = new CommandeDAOImpl(); // TODO: Inject
+        voitureService = new VoitureServiceImpl();
+        commandeDAO = new CommandeDAOImpl();
         commandeDAO.init();
+    }
+    public CommandeCouranteServiceImpl(VoitureService _voitureService, CommandeDAO _commandeDAO) {
+        voitureService = _voitureService;
+        commandeDAO = _commandeDAO;
     }
 
     @Override

@@ -4,20 +4,50 @@ package fr.univlyon1.m2tiw.is.commandes.serveur;
 import fr.univlyon1.m2tiw.is.commandes.controller.CommandeController;
 import fr.univlyon1.m2tiw.is.commandes.controller.OptionController;
 import fr.univlyon1.m2tiw.is.commandes.controller.VoitureController;
+import fr.univlyon1.m2tiw.is.commandes.dao.*;
 import fr.univlyon1.m2tiw.is.commandes.model.Commande;
 import fr.univlyon1.m2tiw.is.commandes.model.Option;
 import fr.univlyon1.m2tiw.is.commandes.model.Voiture;
+import fr.univlyon1.m2tiw.is.commandes.services.*;
+
+import java.sql.SQLException;
 import java.util.Collection;
 
 public class Serveur {
-    private final CommandeController commandeController;
-    private final OptionController optionController;
-    private final VoitureController voitureController;
+
+    private OptionController optionController;
+    private VoitureController voitureController;
+    private CommandeController commandeController;
+
 
     public Serveur() {
-        commandeController = new CommandeController();
-        optionController = new OptionController();
-        voitureController = new VoitureController();
+        try {
+            // Instantiation des DAO
+            OptionDAO optionDAO = new OptionDAOImpl();
+            VoitureDAO voitureDAO = new VoitureDAOImpl();
+            CommandeDAO commandeDAO = new CommandeDAOImpl();
+
+            // Initialisation des DAO
+            optionDAO.init();
+            voitureDAO.init();
+            commandeDAO.init();
+
+            // Instantiation des services
+            OptionService optionService = new OptionServiceImpl(optionDAO);
+            VoitureService voitureService = new VoitureServiceImpl(voitureDAO, optionDAO);
+            CommandeCouranteService commandeCouranteService = new CommandeCouranteServiceImpl(voitureService, commandeDAO);
+            GestionCommandeService gestionCommandeService = new GestionCommandeServiceImpl(
+                    commandeCouranteService, optionService, voitureService, commandeDAO
+            );
+            // Instantiation des controllers
+            optionController = new OptionController(optionService);
+            voitureController = new VoitureController(voitureService);
+            commandeController = new CommandeController(commandeCouranteService, gestionCommandeService);
+
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public Collection<Option> getAllOptions() {

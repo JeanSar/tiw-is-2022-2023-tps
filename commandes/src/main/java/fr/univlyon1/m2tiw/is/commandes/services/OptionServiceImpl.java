@@ -14,10 +14,14 @@ import java.util.Collection;
 public class OptionServiceImpl implements OptionService {
     private static final Logger LOG = LoggerFactory.getLogger(OptionServiceImpl.class);
 
-    private final OptionDAO dao = new OptionDAOImpl(); // TODO: Inject
+    private final OptionDAO dao;
 
     public OptionServiceImpl() throws SQLException {
+        dao = new OptionDAOImpl();
         dao.init();
+    }
+    public OptionServiceImpl(OptionDAO _dao) {
+        dao = _dao;
     }
 
     @Override

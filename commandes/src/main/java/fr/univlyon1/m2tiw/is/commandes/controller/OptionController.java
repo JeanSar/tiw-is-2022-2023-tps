@@ -3,6 +3,7 @@ package fr.univlyon1.m2tiw.is.commandes.controller;
 import fr.univlyon1.m2tiw.is.commandes.model.Option;
 import fr.univlyon1.m2tiw.is.commandes.services.OptionService;
 import fr.univlyon1.m2tiw.is.commandes.services.OptionServiceImpl;
+import fr.univlyon1.m2tiw.is.commandes.services.VoitureService;
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -15,6 +16,9 @@ public class OptionController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    public OptionController(OptionService _optionService) {
+        optionService =  _optionService;
     }
     public Collection<Option> getAllOptions() {
         try {
