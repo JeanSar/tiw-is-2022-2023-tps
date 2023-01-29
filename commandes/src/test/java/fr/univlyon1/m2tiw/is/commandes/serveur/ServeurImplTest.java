@@ -54,7 +54,7 @@ class ServeurImplTest {
             String voitureJSON = createVoiture();
             voiture = mapper.readValue(voitureJSON, Voiture.class);
 
-            assert(voiture.getModele().equals("modele" + (counter-1)));
+            assertEquals(voiture.getModele(), "modele" + (counter - 1));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -75,7 +75,7 @@ class ServeurImplTest {
             voitureJSON = serveurImpl.ajouterConfiguration(voitureJSON, optionJSON);
             voiture = mapper.readValue(voitureJSON, Voiture.class);
 
-            assert(voiture.getOptions().containsKey(option.getNom()));
+            assertTrue(voiture.getOptions().containsKey(option.getNom()));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -101,7 +101,7 @@ class ServeurImplTest {
             voitureJSON = serveurImpl.supprimerConfiguration(voitureJSON, optionJSON);
             voiture = mapper.readValue(voitureJSON, Voiture.class);
 
-            assert(!voiture.getOptions().containsKey(option.getNom()));
+            assertFalse(voiture.getOptions().containsKey(option.getNom()));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -118,7 +118,7 @@ class ServeurImplTest {
             String voitureIdJSON = mapper.writeValueAsString(voiture.getId());
             String commandeCouranteJSON = serveurImpl.ajouterVoiture(voitureIdJSON);
             Commande commandeCourante = mapper.readValue(commandeCouranteJSON, Commande.class);
-            assert(commandeCourante.getVoitures().contains(voiture));
+            assertTrue(commandeCourante.getVoitures().contains(voiture));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -138,7 +138,7 @@ class ServeurImplTest {
 
             commandeCouranteJSON = serveurImpl.supprimerVoiture(voitureIdJSON);
             commandeCourante = mapper.readValue(commandeCouranteJSON, Commande.class);
-            assert(!commandeCourante.getVoitures().contains(voiture));
+            assertFalse(commandeCourante.getVoitures().contains(voiture));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -153,14 +153,48 @@ class ServeurImplTest {
             String voitureJSON = createVoiture();
             voiture = mapper.readValue(voitureJSON, Voiture.class);
 
+            // ajouts des options 1 et 2
+            Option opt1 = new Option("Moteur", "200ch");
+            String opt1JSON = mapper.writeValueAsString(opt1);
+            voitureJSON = mapper.writeValueAsString(voiture);
+            voitureJSON = serveurImpl.ajouterConfiguration(voitureJSON, opt1JSON);
+            voiture = mapper.readValue(voitureJSON, Voiture.class);
+
+            Option opt2 = new Option("Phare",  "Xenon");
+            String opt2JSON = mapper.writeValueAsString(opt2);
+            voitureJSON = mapper.writeValueAsString(voiture);
+            voitureJSON = serveurImpl.ajouterConfiguration(voitureJSON, opt2JSON);
+            voiture = mapper.readValue(voitureJSON, Voiture.class);
+
+            // Ajout de la voiture avec les options
             String voitureIdJSON = mapper.writeValueAsString(voiture.getId());
             String commandeCouranteJSON = serveurImpl.ajouterVoiture(voitureIdJSON);
             Commande commandeCourante = mapper.readValue(commandeCouranteJSON, Commande.class);
-            assert(commandeCourante.getVoitures().contains(voiture));
+            assertTrue(commandeCourante.getVoitures().contains(voiture));
 
+            // Création et ajout d'une deuxième voiture sans options
+            Voiture voiture2;
+            String voiture2JSON = createVoiture();
+            voiture2 = mapper.readValue(voiture2JSON, Voiture.class);
+            String voiture2IdJSON = mapper.writeValueAsString(voiture2.getId());
+            commandeCouranteJSON = serveurImpl.ajouterVoiture(voiture2IdJSON);
+            commandeCourante = mapper.readValue(commandeCouranteJSON, Commande.class);
+            assertTrue(commandeCourante.getVoitures().contains(voiture2));
+
+            // On test d'abord de valider la commande
             String commandeCouranteIdJSON = serveurImpl.validerCommandeCourante();
             Long commandeCouranteId = mapper.readValue(commandeCouranteIdJSON, Long.class);
             assertNotNull(commandeCouranteId);
+
+            // Puis on essaye de la récupérer
+            commandeCouranteIdJSON = mapper.writeValueAsString(commandeCouranteId);
+            String commandeArchiveJSON = serveurImpl.getCommande(commandeCouranteIdJSON);
+            Commande commandeArchive = mapper.readValue(commandeArchiveJSON, Commande.class);
+
+            assertTrue(commandeArchive.isFerme());
+            assertTrue(commandeArchive.getVoitures().contains(voiture));
+            assertTrue(commandeArchive.getVoitures().contains(voiture2));
+
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
