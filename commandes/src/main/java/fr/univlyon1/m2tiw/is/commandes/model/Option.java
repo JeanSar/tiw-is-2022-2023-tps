@@ -1,14 +1,15 @@
 package fr.univlyon1.m2tiw.is.commandes.model;
 
-import java.io.Serializable;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 public class Option {
 
     private String nom;
     private String valeur;
+
+    public Option() {
+
+    }
 
     public Option(String nom, String valeur) {
         this.nom = nom;

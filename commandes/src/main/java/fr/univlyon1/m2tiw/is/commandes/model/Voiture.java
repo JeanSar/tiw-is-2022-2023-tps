@@ -10,6 +10,9 @@ public class Voiture {
     private String modele;
     private Map <String, Option> options;
 
+    public Voiture() {
+
+    }
     public Voiture(Long id, String modele) {
         this.id = id;
         this.modele = modele;
@@ -18,7 +21,15 @@ public class Voiture {
 
     public Voiture(String modele) {
         this.modele = modele;
+        this.options = new HashMap<>();
     }
+
+    public Voiture(Long id, String modele, Map<String, Option> options ) {
+        this.id = id;
+        this.modele = modele;
+        this.options = options;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -61,8 +72,12 @@ public class Voiture {
         return this.options.containsKey(option.getNom());
     }
 
-    public Collection<Option> getOptions() {
+    public Collection<Option> optionsValues() {
         return options.values();
+    }
+
+    public Map <String, Option> getOptions() {
+        return options;
     }
 
     @Override

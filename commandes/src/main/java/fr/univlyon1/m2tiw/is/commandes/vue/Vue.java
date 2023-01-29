@@ -11,6 +11,15 @@ public class Vue {
         return "";
     }
 
+    public String render(String message) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writeValueAsString(message);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return render();
+    }
     public String render(Commande commande) {
         ObjectMapper mapper = new ObjectMapper();
         try {

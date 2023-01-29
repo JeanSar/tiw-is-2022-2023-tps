@@ -22,6 +22,7 @@ public class CommandeCouranteServiceImpl implements CommandeCouranteService {
     public CommandeCouranteServiceImpl(VoitureService _voitureService, CommandeDAO _commandeDAO) {
         voitureService = _voitureService;
         commandeDAO = _commandeDAO;
+        creerCommandeCourante(); // TODO: Changer en fonction du retour du prof
     }
 
     @Override

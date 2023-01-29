@@ -9,6 +9,10 @@ public class Commande {
     private boolean ferme;
     private Collection<Voiture> voitures = new ArrayList<>();
 
+    public Commande() {
+
+    }
+
     public Commande(boolean ferme) {
         this.ferme = ferme;
     }

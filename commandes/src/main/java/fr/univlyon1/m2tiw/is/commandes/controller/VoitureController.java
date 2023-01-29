@@ -41,28 +41,32 @@ public class VoitureController {
          return vue.render();
     }
 
-    public void ajouterConfiguration(String voitureJSON, String optionJSON) {
+    public String ajouterConfiguration(String voitureJSON, String optionJSON) {
         ObjectMapper mapper = new ObjectMapper();
         try{
             Voiture voiture = mapper.readValue(voitureJSON, Voiture.class);
             Option option = mapper.readValue(optionJSON, Option.class);
             voitureService.ajouterConfiguration(voiture.getId(), option);
+            return vue.render(voitureService.getVoiture(voiture.getId()));
         }catch (SQLException | NotFoundException | JsonProcessingException e) {
             e.printStackTrace();
         }
+        return vue.render();
     }
 
-    public void supprimerConfiguration(String voitureJSON, String optionJSON) {
+    public String supprimerConfiguration(String voitureJSON, String optionJSON) {
         ObjectMapper mapper = new ObjectMapper();
         try {
             Voiture voiture = mapper.readValue(voitureJSON, Voiture.class);
             Option option = mapper.readValue(optionJSON, Option.class);
             voitureService.supprimerConfiguration(voiture.getId(), option);
+            return vue.render(voitureService.getVoiture(voiture.getId()));
         }catch (InvalidConfigurationException
                 | SQLException
                 | NotFoundException
                 | JsonProcessingException e){
             e.printStackTrace();
         }
+        return vue.render();
     }
 }

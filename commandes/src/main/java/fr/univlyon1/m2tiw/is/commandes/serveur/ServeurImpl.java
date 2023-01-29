@@ -57,19 +57,19 @@ public class ServeurImpl {
         return voitureController.creerVoiture(modele);
     }
 
-    public void ajouterConfiguration(String voiture, String option) {
-        voitureController.ajouterConfiguration(voiture, option);
+    public String ajouterConfiguration(String voiture, String option) {
+        return voitureController.ajouterConfiguration(voiture, option);
     }
 
-    public void supprimerConfiguration(String voiture, String option) {
-        voitureController.supprimerConfiguration(voiture, option);
+    public String supprimerConfiguration(String voiture, String option) {
+        return voitureController.supprimerConfiguration(voiture, option);
     }
-    public void ajouterVoiture(String voitureId) {
-        commandeController.ajouterVoiture(voitureId);
+    public String ajouterVoiture(String voitureId) {
+        return commandeController.ajouterVoiture(voitureId);
     }
 
-    public void supprimerVoiture(String voitureId) {
-        commandeController.supprimerVoiture(voitureId);
+    public String supprimerVoiture(String voitureId) {
+        return commandeController.supprimerVoiture(voitureId);
     }
     public String validerCommandeCourante()  {
         return commandeController.validerCommandeCourante();

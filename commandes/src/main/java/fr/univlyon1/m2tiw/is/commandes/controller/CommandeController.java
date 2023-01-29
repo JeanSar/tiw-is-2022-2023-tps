@@ -27,30 +27,36 @@ public class CommandeController {
         gestionCommandeService = _gestionCommandeService;
     }
 
-    public void ajouterVoiture(String voitureIdJSON) {
+    public String ajouterVoiture(String voitureIdJSON) {
         ObjectMapper mapper = new ObjectMapper();
         try {
             Long id = mapper.readValue(voitureIdJSON, Long.class);
             commandeCouranteService.ajouterVoiture(id);
+            return vue.render(commandeCouranteService.getCommandeCourante());
         } catch (SQLException | NotFoundException | JsonProcessingException e) {
             e.printStackTrace();
         }
+        return vue.render();
     }
 
-    public void supprimerVoiture(String voitureIdJSON) {
+    public String supprimerVoiture(String voitureIdJSON) {
         ObjectMapper mapper = new ObjectMapper();
         try {
             Long id = mapper.readValue(voitureIdJSON, Long.class);
             commandeCouranteService.supprimerVoiture(id);
+            return vue.render(commandeCouranteService.getCommandeCourante());
         }  catch (SQLException | NotFoundException | JsonProcessingException e) {
             e.printStackTrace();
         }
+        return vue.render();
     }
     public String validerCommandeCourante()  {
         try {
             return vue.render(commandeCouranteService.validerCommandeCourante());
-        } catch (EmptyCommandeException | SQLException | NotFoundException e) {
+        } catch ( SQLException | NotFoundException e) {
             e.printStackTrace();
+        } catch (EmptyCommandeException e) {
+            return vue.render(e.getMessage());
         }
         return vue.render();
     }
