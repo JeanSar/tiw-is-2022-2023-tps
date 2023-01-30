@@ -6,21 +6,22 @@ import fr.univlyon1.m2tiw.is.commandes.controller.OptionController;
 import fr.univlyon1.m2tiw.is.commandes.controller.VoitureController;
 import fr.univlyon1.m2tiw.is.commandes.dao.*;
 import fr.univlyon1.m2tiw.is.commandes.services.*;
-import org.picocontainer.DefaultPicoContainer;
 import org.picocontainer.MutablePicoContainer;
 import org.picocontainer.PicoBuilder;
 import org.picocontainer.injectors.ConstructorInjection;
 
 public class ServeurImpl {
 
-    private OptionController optionController;
-    private VoitureController voitureController;
-    private CommandeController commandeController;
+    private final OptionController optionController;
+    private final VoitureController voitureController;
+    private final CommandeController commandeController;
 
 
     public ServeurImpl() {
         // Instantiation du conteneur
         MutablePicoContainer pico = new PicoBuilder(new ConstructorInjection()).withCaching().build();
+
+        // Ajouts des dépendances
         pico.addComponent(DBAccess.class);
         pico.addComponent(OptionDAOImpl.class);
         pico.addComponent(VoitureDAOImpl.class);
@@ -34,34 +35,14 @@ public class ServeurImpl {
         pico.addComponent(CommandeController.class);
 
         // Instantiation des controleurs avec résolution du référentiel de dépendances par le conteneur
-        optionController = (OptionController)pico.getComponent(OptionController.class);
-        voitureController = (VoitureController)pico.getComponent(VoitureController.class);
-        commandeController = (CommandeController)pico.getComponent(CommandeController.class);
+        optionController = pico.getComponent(OptionController.class);
+        voitureController = pico.getComponent(VoitureController.class);
+        commandeController = pico.getComponent(CommandeController.class);
 
+        // Initilisation
         optionController.start();
         voitureController.start();
         commandeController.start();
-
-//            // Acces à la base de données
-//            DBAccess dbAccess = new DBAccess();
-//
-//            // Instantiation des DAO
-//            OptionDAO optionDAO = new OptionDAOImpl(dbAccess);
-//            VoitureDAO voitureDAO = new VoitureDAOImpl(dbAccess);
-//            CommandeDAO commandeDAO = new CommandeDAOImpl(dbAccess);
-//
-//            // Instantiation des services
-//            OptionService optionService = new OptionServiceImpl(optionDAO);
-//            VoitureService voitureService = new VoitureServiceImpl(voitureDAO, optionDAO);
-//            CommandeCouranteService commandeCouranteService = new CommandeCouranteServiceImpl(voitureService, commandeDAO);
-//            GestionCommandeService gestionCommandeService = new GestionCommandeServiceImpl(
-//                    commandeCouranteService, optionService, voitureService, commandeDAO
-//            );
-//            // Instantiation des controllers
-//            optionController = new OptionController(optionService);
-//            voitureController = new VoitureController(voitureService);
-//            commandeController = new CommandeController(commandeCouranteService, gestionCommandeService);
-
     }
 
     public String getAllOptions() {
