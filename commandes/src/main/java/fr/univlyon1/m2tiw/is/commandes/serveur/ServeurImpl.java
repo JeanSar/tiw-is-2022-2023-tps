@@ -8,6 +8,9 @@ import fr.univlyon1.m2tiw.is.commandes.dao.*;
 import fr.univlyon1.m2tiw.is.commandes.services.*;
 import org.picocontainer.DefaultPicoContainer;
 import org.picocontainer.MutablePicoContainer;
+import org.picocontainer.PicoBuilder;
+import org.picocontainer.injectors.ConstructorInjection;
+
 public class ServeurImpl {
 
     private OptionController optionController;
@@ -17,7 +20,7 @@ public class ServeurImpl {
 
     public ServeurImpl() {
         // Instantiation du conteneur
-        MutablePicoContainer pico = new DefaultPicoContainer();
+        MutablePicoContainer pico = new PicoBuilder(new ConstructorInjection()).withCaching().build();
         pico.addComponent(DBAccess.class);
         pico.addComponent(OptionDAOImpl.class);
         pico.addComponent(VoitureDAOImpl.class);
@@ -34,6 +37,10 @@ public class ServeurImpl {
         optionController = (OptionController)pico.getComponent(OptionController.class);
         voitureController = (VoitureController)pico.getComponent(VoitureController.class);
         commandeController = (CommandeController)pico.getComponent(CommandeController.class);
+
+        optionController.start();
+        voitureController.start();
+        commandeController.start();
 
 //            // Acces à la base de données
 //            DBAccess dbAccess = new DBAccess();

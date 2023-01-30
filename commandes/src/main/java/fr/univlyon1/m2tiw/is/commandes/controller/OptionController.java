@@ -6,7 +6,7 @@ import fr.univlyon1.m2tiw.is.commandes.vue.Vue;
 
 import java.sql.SQLException;
 
-public class OptionController {
+public class OptionController extends Controller {
     private OptionService optionService;
     private final Vue vue = new Vue();
     public OptionController() {

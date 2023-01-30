@@ -2,12 +2,16 @@ package fr.univlyon1.m2tiw.is.commandes.dao;
 
 import fr.univlyon1.m2tiw.is.commandes.model.Option;
 import fr.univlyon1.m2tiw.is.commandes.services.DBAccess;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
 public class OptionDAOImpl extends AbstractSQLDAO implements OptionDAO {
+
+    private final static Logger LOG = LoggerFactory.getLogger(OptionDAOImpl.class);
 
     private PreparedStatement getOptionStatement = null;
     private PreparedStatement getAllOptionsStatement = null;
@@ -31,6 +35,7 @@ public class OptionDAOImpl extends AbstractSQLDAO implements OptionDAO {
         getOptionsForVoitureStatement = connection.prepareStatement("SELECT nom, valeur FROM option2 WHERE voiture = ?");
         deleteOptionForVoitureStatement = connection.prepareStatement("DELETE FROM option2 WHERE voiture = ? AND nom = ?");
         addOptionForVoitureStatement = connection.prepareStatement("INSERT INTO option2(voiture,nom,valeur) VALUES( ?,?,?)");
+        LOG.debug("Statements prepared");
     }
 
     @Override

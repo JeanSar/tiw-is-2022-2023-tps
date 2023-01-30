@@ -8,7 +8,7 @@ import fr.univlyon1.m2tiw.is.commandes.vue.Vue;
 
 import java.sql.SQLException;
 
-public class CommandeController {
+public class CommandeController extends Controller {
     private GestionCommandeService gestionCommandeService;
     private CommandeCouranteService commandeCouranteService;
     private final Vue vue = new Vue();

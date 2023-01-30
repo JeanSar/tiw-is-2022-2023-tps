@@ -9,7 +9,7 @@ import fr.univlyon1.m2tiw.is.commandes.vue.Vue;
 
 import java.sql.SQLException;
 
-public class VoitureController {
+public class VoitureController extends Controller {
 
     private VoitureService voitureService;
     private final Vue vue = new Vue();

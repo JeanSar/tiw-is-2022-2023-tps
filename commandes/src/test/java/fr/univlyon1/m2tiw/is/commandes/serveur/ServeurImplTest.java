@@ -3,6 +3,7 @@ package fr.univlyon1.m2tiw.is.commandes.serveur;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.univlyon1.m2tiw.is.commandes.model.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -14,11 +15,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ServeurImplTest {
     private static Logger log = LoggerFactory.getLogger(ServeurImplTest.class);
-    private ServeurImpl serveurImpl;
+    private static ServeurImpl serveurImpl;
     private static int counter = 0;
 
-    @BeforeEach
-    public void before() {
+    @BeforeAll
+    public static void before() {
         serveurImpl = new ServeurImpl();
     }
     private String createVoiture() {
