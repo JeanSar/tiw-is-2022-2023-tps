@@ -2,8 +2,6 @@ package fr.univlyon1.m2tiw.is.commandes.services;
 
 import fr.univlyon1.m2tiw.is.commandes.dao.OptionDAO;
 import fr.univlyon1.m2tiw.is.commandes.dao.OptionDAOImpl;
-import fr.univlyon1.m2tiw.is.commandes.dao.OptionDAOMock;
-import fr.univlyon1.m2tiw.is.commandes.dao.NotFoundException;
 import fr.univlyon1.m2tiw.is.commandes.model.Option;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,8 +18,8 @@ public class OptionServiceImpl implements OptionService {
         dao = new OptionDAOImpl();
         dao.init();
     }
-    public OptionServiceImpl(OptionDAO _dao) {
-        dao = _dao;
+    public OptionServiceImpl(OptionDAO _optionDAO) {
+        dao = _optionDAO;
     }
 
     @Override

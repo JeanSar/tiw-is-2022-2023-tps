@@ -21,8 +21,9 @@ public class CommandeDAOImpl extends AbstractSQLDAO implements CommandeDAO {
         super();
     }
 
-    public CommandeDAOImpl(DBAccess _dbAccess) {
+    public CommandeDAOImpl(DBAccess _dbAccess) throws SQLException {
         super(_dbAccess);
+        init();
     }
 
     @Override

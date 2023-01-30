@@ -19,8 +19,9 @@ public class OptionDAOImpl extends AbstractSQLDAO implements OptionDAO {
         super();
     }
 
-    public OptionDAOImpl(DBAccess _dbAccess) {
+    public OptionDAOImpl(DBAccess _dbAccess) throws SQLException {
         super(_dbAccess);
+        init();
     }
 
     @Override

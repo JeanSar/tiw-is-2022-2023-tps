@@ -24,8 +24,9 @@ public class VoitureDAOImpl extends AbstractSQLDAO implements VoitureDAO {
         super();
     }
 
-    public VoitureDAOImpl(DBAccess _dbAccess) {
+    public VoitureDAOImpl(DBAccess _dbAccess) throws SQLException {
         super(_dbAccess);
+        init();
     }
     @Override
     protected void setupTable(Connection connection) throws SQLException {
