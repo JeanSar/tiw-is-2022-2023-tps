@@ -1,4 +1,4 @@
-package fr.univlyon1.m2tiw.is.commandes.services;
+package fr.univlyon1.m2tiw.is.commandes.resources;
 
 import fr.univlyon1.m2tiw.is.commandes.dao.*;
 import fr.univlyon1.m2tiw.is.commandes.model.Commande;
@@ -8,17 +8,11 @@ import fr.univlyon1.m2tiw.is.commandes.model.Voiture;
 import java.sql.SQLException;
 import java.util.Collection;
 
-public class VoitureServiceImpl implements VoitureService {
+public class VoitureResourceImpl implements VoitureResource {
     private final VoitureDAO voitureDAO;
     private final OptionDAO optionDAO;
 
-    public VoitureServiceImpl() throws SQLException {
-        voitureDAO = new VoitureDAOImpl();
-        optionDAO = new OptionDAOImpl();
-        voitureDAO.init();
-        optionDAO.init();
-    }
-    public VoitureServiceImpl(VoitureDAO _voitureDAO, OptionDAO _optionDAO) throws SQLException {
+    public VoitureResourceImpl(VoitureDAO _voitureDAO, OptionDAO _optionDAO) throws SQLException {
         voitureDAO = _voitureDAO;
         optionDAO = _optionDAO;
     }

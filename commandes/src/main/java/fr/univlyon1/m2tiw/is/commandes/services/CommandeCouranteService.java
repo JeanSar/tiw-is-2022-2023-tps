@@ -8,10 +8,9 @@ import java.sql.SQLException;
 import java.util.Collection;
 
 public interface CommandeCouranteService {
-    public Commande creerCommandeCourante();
-    public void ajouterVoiture(Long voitureId) throws SQLException, NotFoundException;
-    public void supprimerVoiture(Long voitureId) throws NotFoundException, SQLException;
-    public Collection<Voiture> getAllVoitures();
-    public Commande getCommandeCourante();
-    public long validerCommandeCourante() throws EmptyCommandeException, SQLException, NotFoundException;
+    Commande creerCommandeCourante();
+    void ajouterVoiture(Long voitureId) throws SQLException, NotFoundException;
+    void supprimerVoiture(Long voitureId) throws NotFoundException, SQLException;
+    Collection<Voiture> getAllVoitures();
+    Commande getCommandeCourante();
 }

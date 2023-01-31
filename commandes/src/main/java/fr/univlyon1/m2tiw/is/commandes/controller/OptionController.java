@@ -1,32 +1,37 @@
 package fr.univlyon1.m2tiw.is.commandes.controller;
 
-import fr.univlyon1.m2tiw.is.commandes.services.OptionService;
-import fr.univlyon1.m2tiw.is.commandes.services.OptionServiceImpl;
+import fr.univlyon1.m2tiw.is.commandes.resources.OptionResource;
 import fr.univlyon1.m2tiw.is.commandes.vue.Vue;
 
 import java.sql.SQLException;
+import java.util.Map;
 
-public class OptionController extends Controller {
-    private OptionService optionService;
-    private Vue vue;
-    public OptionController() {
-        try {
-            optionService = new OptionServiceImpl();
-            vue = new Vue();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    public OptionController(OptionService _optionService, Vue _vue) {
-        optionService =  _optionService;
+public class OptionController extends AbstractController {
+    private final OptionResource optionResource;
+    private final Vue vue;
+
+    public OptionController(OptionResource _optionService, Vue _vue) {
+        optionResource =  _optionService;
         vue = _vue;
     }
-    /**
-     * @return String JSON des options
-     */
-    public String getAllOptions() {
+
+    @Override
+    public Object process(String ressource, String methode, Map<String, Object> parametres) {
+        switch (ressource) {
+            case "option":
+                switch (methode) {
+                    case "get":
+                        return getAllOptions();
+                    default:
+                        return vue.renderMethodeNotFound();
+                }
+            default:
+                return vue.renderResourceNotFound();
+        }
+    }
+    private String getAllOptions() {
         try {
-            return vue.render(optionService.getAllOptions());
+            return vue.render(optionResource.getAllOptions());
         } catch (SQLException e) {
             e.printStackTrace();
         }

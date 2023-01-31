@@ -2,20 +2,20 @@ package fr.univlyon1.m2tiw.is.commandes.serveur;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.univlyon1.m2tiw.is.commandes.model.*;
+import fr.univlyon1.m2tiw.is.commandes.model.Commande;
+import fr.univlyon1.m2tiw.is.commandes.model.Option;
+import fr.univlyon1.m2tiw.is.commandes.model.Voiture;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ServeurImplTest {
-    private static Logger log = LoggerFactory.getLogger(ServeurImplTest.class);
-    private static ServeurImpl serveurImpl;
+    private static Serveur serveurImpl;
     private static int counter = 0;
 
     @BeforeAll
@@ -28,16 +28,21 @@ class ServeurImplTest {
         try {
             modele = mapper.writeValueAsString(modele);
         } catch (JsonProcessingException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
-        String voitureJSON =  serveurImpl.creerVoiture(modele);
+        Map<String, Object> param = new HashMap<>();
+        param.put("modele", modele);
+        String voitureJSON =  (String) serveurImpl.processRequest("voiture", "create", param);
+        assertNotNull(voitureJSON);
         assertNotEquals(voitureJSON, "");
         return voitureJSON;
     }
     @Test
     void getAllOptions() {
         ObjectMapper mapper = new ObjectMapper();
-        String optionsJSON = serveurImpl.getAllOptions();
+        String optionsJSON = (String) serveurImpl.processRequest("option","get", null);
+        assertNotNull(optionsJSON);
         assertNotEquals(optionsJSON, "");
         try {
             Collection<Option> options = mapper.readValue(optionsJSON, Collection.class);
@@ -73,7 +78,12 @@ class ServeurImplTest {
             Option option = new Option("Moteur", "200ch");
             String optionJSON = mapper.writeValueAsString(option);
             voitureJSON = mapper.writeValueAsString(voiture);
-            voitureJSON = serveurImpl.ajouterConfiguration(voitureJSON, optionJSON);
+            Map<String, Object> param = new HashMap<>();
+            param.put("voiture", voitureJSON);
+            param.put("option", optionJSON);
+            voitureJSON = (String) serveurImpl.processRequest("voiture", "add", param);
+            assertNotNull(voitureJSON);
+            assertNotEquals(voitureJSON, "");
             voiture = mapper.readValue(voitureJSON, Voiture.class);
 
             assertTrue(voiture.getOptions().containsKey(option.getNom()));
@@ -94,12 +104,22 @@ class ServeurImplTest {
             Option option = new Option("Roue",  "Increvable");
             String optionJSON = mapper.writeValueAsString(option);
             voitureJSON = mapper.writeValueAsString(voiture);
-            voitureJSON = serveurImpl.ajouterConfiguration(voitureJSON, optionJSON);
+            Map<String, Object> param = new HashMap<>();
+            param.put("voiture", voitureJSON);
+            param.put("option", optionJSON);
+            voitureJSON = (String) serveurImpl.processRequest("voiture", "add", param);
+            assertNotNull(voitureJSON);
+            assertNotEquals(voitureJSON, "");
             voiture = mapper.readValue(voitureJSON, Voiture.class);
 
             optionJSON = mapper.writeValueAsString(voiture.getOptions().get(option.getNom()));
             voitureJSON = mapper.writeValueAsString(voiture);
-            voitureJSON = serveurImpl.supprimerConfiguration(voitureJSON, optionJSON);
+            param = new HashMap<>();
+            param.put("voiture", voitureJSON);
+            param.put("option", optionJSON);
+            voitureJSON = (String) serveurImpl.processRequest("voiture", "delete", param);
+            assertNotNull(voitureJSON);
+            assertNotEquals(voitureJSON, "");
             voiture = mapper.readValue(voitureJSON, Voiture.class);
 
             assertFalse(voiture.getOptions().containsKey(option.getNom()));
@@ -117,8 +137,13 @@ class ServeurImplTest {
             voiture = mapper.readValue(voitureJSON, Voiture.class);
 
             String voitureIdJSON = mapper.writeValueAsString(voiture.getId());
-            String commandeCouranteJSON = serveurImpl.ajouterVoiture(voitureIdJSON);
+            Map<String, Object> param = new HashMap<>();
+            param.put("id", voitureIdJSON);
+            String commandeCouranteJSON = (String) serveurImpl.processRequest("commandeCourante", "add", param);
+            assertNotNull(commandeCouranteJSON);
+            assertNotEquals(commandeCouranteJSON, "");
             Commande commandeCourante = mapper.readValue(commandeCouranteJSON, Commande.class);
+
             assertTrue(commandeCourante.getVoitures().contains(voiture));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -134,10 +159,17 @@ class ServeurImplTest {
             voiture = mapper.readValue(voitureJSON, Voiture.class);
 
             String voitureIdJSON = mapper.writeValueAsString(voiture.getId());
-            String commandeCouranteJSON = serveurImpl.ajouterVoiture(voitureIdJSON);
+            Map<String, Object> param = new HashMap<>();
+            param.put("id", voitureIdJSON);
+            String commandeCouranteJSON = (String) serveurImpl.processRequest("commandeCourante", "add", param);
+            assertNotNull(commandeCouranteJSON);
+            assertNotEquals(commandeCouranteJSON, "");
             Commande commandeCourante = mapper.readValue(commandeCouranteJSON, Commande.class);
+            assertTrue(commandeCourante.getVoitures().contains(voiture));
 
-            commandeCouranteJSON = serveurImpl.supprimerVoiture(voitureIdJSON);
+            commandeCouranteJSON = (String) serveurImpl.processRequest("commandeCourante", "delete", param);
+            assertNotNull(commandeCouranteJSON);
+            assertNotEquals(commandeCouranteJSON, "");
             commandeCourante = mapper.readValue(commandeCouranteJSON, Commande.class);
             assertFalse(commandeCourante.getVoitures().contains(voiture));
         } catch (JsonProcessingException e) {
@@ -158,18 +190,32 @@ class ServeurImplTest {
             Option opt1 = new Option("Moteur", "200ch");
             String opt1JSON = mapper.writeValueAsString(opt1);
             voitureJSON = mapper.writeValueAsString(voiture);
-            voitureJSON = serveurImpl.ajouterConfiguration(voitureJSON, opt1JSON);
+            Map<String, Object> param = new HashMap<>();
+            param.put("voiture", voitureJSON);
+            param.put("option", opt1JSON);
+            voitureJSON = (String) serveurImpl.processRequest("voiture", "add", param);
+            assertNotNull(voitureJSON);
+            assertNotEquals(voitureJSON, "");
             voiture = mapper.readValue(voitureJSON, Voiture.class);
 
             Option opt2 = new Option("Phare",  "Xenon");
             String opt2JSON = mapper.writeValueAsString(opt2);
             voitureJSON = mapper.writeValueAsString(voiture);
-            voitureJSON = serveurImpl.ajouterConfiguration(voitureJSON, opt2JSON);
+            param = new HashMap<>();
+            param.put("voiture", voitureJSON);
+            param.put("option", opt2JSON);
+            voitureJSON = (String) serveurImpl.processRequest("voiture", "add", param);
+            assertNotNull(voitureJSON);
+            assertNotEquals(voitureJSON, "");
             voiture = mapper.readValue(voitureJSON, Voiture.class);
 
             // Ajout de la voiture avec les options
             String voitureIdJSON = mapper.writeValueAsString(voiture.getId());
-            String commandeCouranteJSON = serveurImpl.ajouterVoiture(voitureIdJSON);
+            param = new HashMap<>();
+            param.put("id", voitureIdJSON);
+            String commandeCouranteJSON = (String) serveurImpl.processRequest("commandeCourante", "add", param);
+            assertNotNull(commandeCouranteJSON);
+            assertNotEquals(commandeCouranteJSON, "");
             Commande commandeCourante = mapper.readValue(commandeCouranteJSON, Commande.class);
             assertTrue(commandeCourante.getVoitures().contains(voiture));
 
@@ -178,18 +224,28 @@ class ServeurImplTest {
             String voiture2JSON = createVoiture();
             voiture2 = mapper.readValue(voiture2JSON, Voiture.class);
             String voiture2IdJSON = mapper.writeValueAsString(voiture2.getId());
-            commandeCouranteJSON = serveurImpl.ajouterVoiture(voiture2IdJSON);
+            param = new HashMap<>();
+            param.put("id", voiture2IdJSON);
+            commandeCouranteJSON = (String) serveurImpl.processRequest("commandeCourante", "add", param);
+            assertNotNull(commandeCouranteJSON);
+            assertNotEquals(commandeCouranteJSON, "");
             commandeCourante = mapper.readValue(commandeCouranteJSON, Commande.class);
             assertTrue(commandeCourante.getVoitures().contains(voiture2));
 
             // On test d'abord de valider la commande
-            String commandeCouranteIdJSON = serveurImpl.validerCommandeCourante();
+            String commandeCouranteIdJSON = (String) serveurImpl.processRequest("commandeCourante", "validate", null);
+            assertNotNull(commandeCouranteIdJSON);
+            assertNotEquals(commandeCouranteIdJSON, "");
             Long commandeCouranteId = mapper.readValue(commandeCouranteIdJSON, Long.class);
             assertNotNull(commandeCouranteId);
 
             // Puis on essaye de la récupérer
             commandeCouranteIdJSON = mapper.writeValueAsString(commandeCouranteId);
-            String commandeArchiveJSON = serveurImpl.getCommande(commandeCouranteIdJSON);
+            param = new HashMap<>();
+            param.put("id", commandeCouranteIdJSON);
+            String commandeArchiveJSON = (String) serveurImpl.processRequest("commandeArchivee", "get", param);
+            assertNotNull(commandeCouranteIdJSON);
+            assertNotEquals(commandeCouranteIdJSON, "");
             Commande commandeArchive = mapper.readValue(commandeArchiveJSON, Commande.class);
 
             assertTrue(commandeArchive.isFerme());
@@ -207,7 +263,9 @@ class ServeurImplTest {
         try {
             ObjectMapper mapper = new ObjectMapper();
 
-            String messageJSON = serveurImpl.validerCommandeCourante();
+            String messageJSON = (String) serveurImpl.processRequest("commandeCourante", "validate", null);
+            assertNotNull(messageJSON);
+            assertNotEquals(messageJSON, "");
             String message = mapper.readValue(messageJSON, String.class);
             assertEquals(message,"Commande vide");
         } catch (JsonProcessingException e) {

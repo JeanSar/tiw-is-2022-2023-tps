@@ -4,67 +4,89 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.univlyon1.m2tiw.is.commandes.dao.NotFoundException;
 import fr.univlyon1.m2tiw.is.commandes.model.Option;
 import fr.univlyon1.m2tiw.is.commandes.model.Voiture;
-import fr.univlyon1.m2tiw.is.commandes.services.*;
+import fr.univlyon1.m2tiw.is.commandes.resources.VoitureResource;
 import fr.univlyon1.m2tiw.is.commandes.vue.Vue;
 
 import java.sql.SQLException;
+import java.util.Map;
 
-public class VoitureController extends Controller {
+public class VoitureController extends AbstractController {
 
-    private VoitureService voitureService;
-    private Vue vue;
+    private final VoitureResource voitureResource;
+    private final Vue vue;
 
-    public VoitureController() {
-        try {
-            voitureService = new VoitureServiceImpl();
-            vue = new Vue();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
-    public VoitureController(VoitureService _voitureService, Vue _vue) {
-        voitureService = _voitureService;
+    public VoitureController(VoitureResource _voitureService, Vue _vue) {
+        voitureResource = _voitureService;
         vue = _vue;
     }
 
-    /**
-     * @param modeleJSON modèle en JSON
-     * @return String JSON de la voiture créée
-     */
-    public String creerVoiture(String modeleJSON){
-        ObjectMapper mapper = new ObjectMapper();
+    @Override
+    public Object process(String ressource, String methode, Map<String, Object> parametres) {
+        switch (ressource) {
+            case "voiture":
+                switch (methode) {
+                    case "create":
+                        return creerVoiture(parametres);
+                    case "add":
+                        return ajouterConfiguration(parametres);
+                    case "delete":
+                        return supprimerConfiguration(parametres);
+                    default:
+                        return vue.renderMethodeNotFound();
+                }
+            default:
+                return vue.renderResourceNotFound();
+        }
+    }
+
+    private String creerVoiture(Map<String, Object> parametres){
+        String modeleJSON = (String) parametres.get("modele");
+        if(null == modeleJSON)
+            return vue.renderParametreNotFound("modele");
         try{
+            ObjectMapper mapper = new ObjectMapper();
             String modele = mapper.readValue(modeleJSON, String.class);
-            return vue.render(voitureService.creerVoiture(modele));
+            return vue.render(voitureResource.creerVoiture(modele));
         } catch (SQLException | JsonProcessingException e){
             e.printStackTrace();
         }
          return vue.render();
     }
 
-    public String ajouterConfiguration(String voitureJSON, String optionJSON) {
-        ObjectMapper mapper = new ObjectMapper();
+    private String ajouterConfiguration(Map<String, Object> parametres) {
+        String voitureJSON = (String) parametres.get("voiture");
+        if(null == voitureJSON)
+            return vue.renderParametreNotFound("voiture");
+        String optionJSON = (String) parametres.get("option");
+        if(null == optionJSON)
+            return vue.renderParametreNotFound("option");
         try{
+            ObjectMapper mapper = new ObjectMapper();
             Voiture voiture = mapper.readValue(voitureJSON, Voiture.class);
             Option option = mapper.readValue(optionJSON, Option.class);
-            voitureService.ajouterConfiguration(voiture.getId(), option);
-            return vue.render(voitureService.getVoiture(voiture.getId()));
+            voitureResource.ajouterConfiguration(voiture.getId(), option);
+            return vue.render(voitureResource.getVoiture(voiture.getId()));
         }catch (SQLException | NotFoundException | JsonProcessingException e) {
             e.printStackTrace();
         }
         return vue.render();
     }
 
-    public String supprimerConfiguration(String voitureJSON, String optionJSON) {
-        ObjectMapper mapper = new ObjectMapper();
+    private String supprimerConfiguration(Map<String, Object> parametres) {
+        String voitureJSON = (String) parametres.get("voiture");
+        if(null == voitureJSON)
+            return vue.renderParametreNotFound("voiture");
+        String optionJSON = (String) parametres.get("option");
+        if(null == optionJSON)
+            return vue.renderParametreNotFound("option");
         try {
+            ObjectMapper mapper = new ObjectMapper();
             Voiture voiture = mapper.readValue(voitureJSON, Voiture.class);
             Option option = mapper.readValue(optionJSON, Option.class);
-            voitureService.supprimerConfiguration(voiture.getId(), option);
-            return vue.render(voitureService.getVoiture(voiture.getId()));
-        }catch (InvalidConfigurationException
-                | SQLException
+            voitureResource.supprimerConfiguration(voiture.getId(), option);
+            return vue.render(voitureResource.getVoiture(voiture.getId()));
+        }catch (SQLException
                 | NotFoundException
                 | JsonProcessingException e){
             e.printStackTrace();
