@@ -6,6 +6,7 @@ import fr.univlyon1.m2tiw.is.commandes.controller.OptionController;
 import fr.univlyon1.m2tiw.is.commandes.controller.VoitureController;
 import fr.univlyon1.m2tiw.is.commandes.dao.*;
 import fr.univlyon1.m2tiw.is.commandes.services.*;
+import fr.univlyon1.m2tiw.is.commandes.vue.Vue;
 import org.picocontainer.MutablePicoContainer;
 import org.picocontainer.PicoBuilder;
 import org.picocontainer.injectors.ConstructorInjection;
@@ -30,6 +31,7 @@ public class ServeurImpl {
         pico.addComponent(VoitureServiceImpl.class);
         pico.addComponent(CommandeCouranteServiceImpl.class);
         pico.addComponent(GestionCommandeServiceImpl.class);
+        pico.addComponent(Vue.class);
         pico.addComponent(OptionController.class);
         pico.addComponent(VoitureController.class);
         pico.addComponent(CommandeController.class);
@@ -70,8 +72,13 @@ public class ServeurImpl {
     public String validerCommandeCourante()  {
         return commandeController.validerCommandeCourante();
     }
-
     public String getCommande(String id) {
         return commandeController.getCommande(id);
     }
+
+//    public Object processRequest(String commande, Map<String, Object> parametres) {
+//        switch(commande) {
+//
+//        }
+//    }
 }

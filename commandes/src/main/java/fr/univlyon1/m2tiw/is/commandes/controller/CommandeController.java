@@ -11,20 +11,23 @@ import java.sql.SQLException;
 public class CommandeController extends Controller {
     private GestionCommandeService gestionCommandeService;
     private CommandeCouranteService commandeCouranteService;
-    private final Vue vue = new Vue();
+    private Vue vue;
 
     public CommandeController() {
         try {
             commandeCouranteService = new CommandeCouranteServiceImpl();
             gestionCommandeService = new GestionCommandeServiceImpl();
+            vue = new Vue();
         } catch(SQLException e) {
             e.printStackTrace();
         }
     }
     public CommandeController(CommandeCouranteService _commandeCouranteService,
-                              GestionCommandeService _gestionCommandeService) {
+                              GestionCommandeService _gestionCommandeService,
+                              Vue _vue) {
         commandeCouranteService = _commandeCouranteService;
         gestionCommandeService = _gestionCommandeService;
+        vue = _vue;
     }
 
     public String ajouterVoiture(String voitureIdJSON) {

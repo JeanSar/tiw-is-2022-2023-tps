@@ -12,18 +12,20 @@ import java.sql.SQLException;
 public class VoitureController extends Controller {
 
     private VoitureService voitureService;
-    private final Vue vue = new Vue();
+    private Vue vue;
 
     public VoitureController() {
         try {
             voitureService = new VoitureServiceImpl();
+            vue = new Vue();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public VoitureController(VoitureService _voitureService) {
+    public VoitureController(VoitureService _voitureService, Vue _vue) {
         voitureService = _voitureService;
+        vue = _vue;
     }
 
     /**

@@ -1,12 +1,22 @@
 package fr.univlyon1.m2tiw.is.commandes.vue;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import fr.univlyon1.m2tiw.is.commandes.controller.Controller;
 import fr.univlyon1.m2tiw.is.commandes.model.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 
 public class Vue {
+    private static final Logger LOG = LoggerFactory.getLogger(Controller.class);
+
+    public Vue() {
+        String message = "Composant Vue démarré : " + this;
+        System.out.println(message);
+        LOG.debug(message);
+    }
     public String render() {
         return "";
     }
