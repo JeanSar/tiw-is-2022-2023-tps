@@ -65,9 +65,9 @@ public class Pico {
             addComponentFromJsonToClass(compo, application, businessPrefix);
         }
     }
-    private void addComponentFromJsonToClass(Object json, MutablePicoContainer components, String metaPrefix) throws JSONException {
+    private void addComponentFromJsonToClass(Object json, MutablePicoContainer components, String Prefix) throws JSONException {
         JSONObject jsonObject = (JSONObject) json;
-        String name = jsonObject.getString("class-name") + metaPrefix;
+        String name = jsonObject.getString("class-name") + Prefix;
         try {
             Class<?> class_name = Class.forName(name);
             components.addComponent(class_name);
