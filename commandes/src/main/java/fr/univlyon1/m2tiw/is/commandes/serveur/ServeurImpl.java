@@ -1,6 +1,5 @@
 package fr.univlyon1.m2tiw.is.commandes.serveur;
 
-
 import fr.univlyon1.m2tiw.is.commandes.controller.CommandeController;
 import fr.univlyon1.m2tiw.is.commandes.controller.OptionController;
 import fr.univlyon1.m2tiw.is.commandes.controller.VoitureController;
@@ -11,6 +10,7 @@ import fr.univlyon1.m2tiw.is.commandes.vue.Vue;
 import org.picocontainer.MutablePicoContainer;
 import org.picocontainer.PicoBuilder;
 import org.picocontainer.injectors.ConstructorInjection;
+import fr.univlyon1.m2tiw.is.commandes.serveur.Pico;
 
 import java.util.Map;
 
@@ -21,10 +21,11 @@ public class ServeurImpl implements Serveur {
     private final CommandeController commandeController;
     private final Vue vue;
 
-
     public ServeurImpl() {
         // Instantiation du conteneur
         MutablePicoContainer pico = new PicoBuilder(new ConstructorInjection()).withCaching().build();
+
+        Pico test = new Pico();
 
         // Ajouts des dépendances
         pico.addComponent(DBAccess.class);
