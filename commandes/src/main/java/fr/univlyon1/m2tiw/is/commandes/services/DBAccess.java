@@ -18,17 +18,17 @@ public class DBAccess {
      * See https://jdbc.postgresql.org/documentation/head/connect.html
      */
     // Par simplicité, on réutilise la base du microservice catalogue-modele, mais on pourrait utiliser une autre base.
-    private static final String DB_URL = "jdbc:postgresql://localhost:5432/mdldb"; // TODO: put in a configuration file
+    private static String DB_URL = "jdbc:postgresql://localhost:5432/mdldb";
 
     /**
      * Database username.
      */
-    private static final String DB_USERNAME = "mdl"; // TODO: put in a configuration file
+    private static String DB_USERNAME = "mdl";
 
     /**
      * Database password.
      */
-    private static final String DB_PASSWORD = "mdlpwd"; // TODO: put in a configuration file
+    private static String DB_PASSWORD = "mdlpwd";
 
     /**
      * JDBC connection. Initialized the first time a connection is required.

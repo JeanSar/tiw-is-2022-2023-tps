@@ -8,6 +8,7 @@ import fr.univlyon1.m2tiw.is.commandes.model.Voiture;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +20,7 @@ class ServeurImplTest {
     private static int counter = 0;
 
     @BeforeAll
-    public static void before() {
+    public static void before() throws IOException, NoSuchFieldException, ClassNotFoundException, IllegalAccessException {
         serveurImpl = new ServeurImpl();
     }
     private String createVoiture() {
