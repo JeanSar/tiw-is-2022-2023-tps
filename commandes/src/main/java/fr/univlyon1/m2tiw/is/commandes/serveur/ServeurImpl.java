@@ -29,10 +29,13 @@ public class ServeurImpl implements Serveur {
         // Instantiation du conteneur
         MutablePicoContainer pico = new DefaultPicoContainer();
         ClassLoader classL = getClass().getClassLoader();
+        //Récupération du config.json dans les ressources
         File file = new File(Objects.requireNonNull(classL.getResource("config.json")).getFile());
-        Map<String, Object> configuration = convertJsonToMapStringObj(new File(file.getPath()));
+        //Convertisseur du config en un map de string/Object
+        Map<String, Object> configuration = converterJsonToMapStringObject(new File(file.getPath()));
         Map<String, Object> appConfiguration = (Map<String, Object>) configuration.get("application-config");
 
+        //Récupération des données Database
         List<Map<String, Object>> dbAccessComponents = (List<Map<String, Object>>) appConfiguration
                 .get("dbAccess-component");
         for (Map<String, Object> component : dbAccessComponents) {
@@ -57,12 +60,7 @@ public class ServeurImpl implements Serveur {
             pico.as(Characteristics.CACHE, Characteristics.CDI).addComponent(composantClass);
         }
 
-        List<Map<String, Object>> javaComponents = (List<Map<String, Object>>) appConfiguration.get("java-components");
-        for (Map<String, Object> component : javaComponents) {
-            Class<?> composantClass = Class.forName((String) component.get("class-name"));
-            pico.as(Characteristics.CACHE, Characteristics.CDI).addComponent(composantClass);
-        }
-
+        //Récupération  des différents components
         List<Map<String, Object>> persistenceComponents = (List<Map<String, Object>>) appConfiguration
                 .get("persistence-components");
         for (Map<String, Object> component : persistenceComponents) {
@@ -115,7 +113,7 @@ public class ServeurImpl implements Serveur {
         }
     }
 
-    public static Map<String,Object> convertJsonToMapStringObj(File json) throws IOException{
+    public static Map<String,Object> converterJsonToMapStringObject(File json) throws IOException{
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(json, new TypeReference<>(){});
     }

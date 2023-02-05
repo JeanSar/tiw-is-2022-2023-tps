@@ -16,10 +16,6 @@
       {"class-name": "fr.univlyon1.m2tiw.is.commandes.controller.CommandeController"},
       {"class-name": "fr.univlyon1.m2tiw.is.commandes.vue.Vue"}
     ],
-    "java-components" : [
-      {"class-name": "java.lang.String"},
-      {"class-name": "java.lang.Boolean"}
-    ],
     "persistence-components": [
       {"class-name": "fr.univlyon1.m2tiw.is.commandes.dao.CommandeDAOImpl"},
       {"class-name": "fr.univlyon1.m2tiw.is.commandes.dao.VoitureDAOImpl"},
