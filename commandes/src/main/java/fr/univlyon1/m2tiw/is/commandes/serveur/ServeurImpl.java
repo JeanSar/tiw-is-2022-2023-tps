@@ -1,5 +1,7 @@
 package fr.univlyon1.m2tiw.is.commandes.serveur;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.univlyon1.m2tiw.is.commandes.controller.CommandeController;
 import fr.univlyon1.m2tiw.is.commandes.controller.OptionController;
 import fr.univlyon1.m2tiw.is.commandes.controller.VoitureController;
@@ -28,7 +30,7 @@ public class ServeurImpl implements Serveur {
         MutablePicoContainer pico = new DefaultPicoContainer();
         ClassLoader classL = getClass().getClassLoader();
         File file = new File(Objects.requireNonNull(classL.getResource("config.json")).getFile());
-        Map<String, Object> configuration = Mapper.convertJsonToMapStringObj(new File(file.getPath()));
+        Map<String, Object> configuration = convertJsonToMapStringObj(new File(file.getPath()));
         Map<String, Object> appConfiguration = (Map<String, Object>) configuration.get("application-config");
 
         List<Map<String, Object>> dbAccessComponents = (List<Map<String, Object>>) appConfiguration
@@ -111,5 +113,10 @@ public class ServeurImpl implements Serveur {
             default:
                 return vue.renderResourceNotFound();
         }
+    }
+
+    public static Map<String,Object> convertJsonToMapStringObj(File json) throws IOException{
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(json, new TypeReference<>(){});
     }
 }
