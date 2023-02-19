@@ -1,9 +1,12 @@
 package fr.univlyon1.m2tiw.is.catalogue.model;
 
-import fr.univlyon1.m2tiw.is.catalogue.service.dto.MachineDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity
 public class Machine {
@@ -11,6 +14,9 @@ public class Machine {
     @GeneratedValue
     private Long id;
     private String modele;
+
+    @OneToMany(mappedBy = "machine")
+    private Collection<Configuration> configurations = new ArrayList<>();
 
     public Machine() {
     }
@@ -34,5 +40,13 @@ public class Machine {
 
     public void setModele(String modele) {
         this.modele = modele;
+    }
+
+    public Collection<Configuration> getConfigurations() {
+        return configurations;
+    }
+
+    public void setConfigurations(Collection<Configuration> configurations) {
+        this.configurations = configurations;
     }
 }

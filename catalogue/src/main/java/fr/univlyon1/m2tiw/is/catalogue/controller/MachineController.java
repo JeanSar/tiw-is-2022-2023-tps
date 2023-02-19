@@ -36,8 +36,27 @@ public class MachineController {
     }
 
     @PostMapping()
-    public ResponseEntity<MachineDTO> createMachine(@RequestBody  MachineDTO machineDTO) {
+    public ResponseEntity<MachineDTO> createMachine(@RequestBody MachineDTO machineDTO) {
         log.info("Creating machine with {}", machineDTO);
         return new ResponseEntity<>(machineService.createMachine(machineDTO), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteMachine(@PathVariable("id") long id) {
+        log.info("Deleting machine {}", id);
+        machineService.deleteMachine(id);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<MachineDTO> updateMachine(@RequestBody MachineDTO machineDTO, @PathVariable("id") long id) {
+        log.info("Updating machine {}",id);
+        machineDTO.id = id; // forcing the id from the path
+        try {
+            var newMachine = machineService.updateMachine(machineDTO);
+            return new ResponseEntity<>(newMachine, HttpStatus.OK);
+        } catch (NoSuchMachineException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
