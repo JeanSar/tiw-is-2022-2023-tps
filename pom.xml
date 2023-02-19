@@ -23,6 +23,7 @@
     <modules>
         <module>catalogue</module>
         <module>commandes</module>
+        <module>chain-manager</module>
     </modules>
 
     <dependencyManagement>

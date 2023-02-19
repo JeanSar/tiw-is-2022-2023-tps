@@ -7,6 +7,8 @@ services:
       POSTGRES_PASSWORD: mdlpwd
       POSTGRES_USER: mdl
       POSTGRES_DB: mdldb
+    volumes:
+      - "./pg-init:/docker-entrypoint-initdb.d"
 
   rabbitmq:
     image: rabbitmq:3-management
