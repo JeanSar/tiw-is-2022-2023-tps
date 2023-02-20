@@ -8,6 +8,10 @@ import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.Collection;
 
+// TODO: TP3 ajouter un champ String queue qui contiendra
+//  le nom de la file rabbitmq pour envoyer des messages à cette machine.
+//  Penser à mettre également à jour le DTO et les services d'update.
+
 @Entity
 public class Machine {
     @Id
