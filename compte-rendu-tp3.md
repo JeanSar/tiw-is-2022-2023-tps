@@ -27,9 +27,12 @@ Au niveau des composants on retrouve :
 
 ### Q1.2. Sur quel port l'application chain-manager écoute-elle ? Où se port est-il configuré ?
 
+Sur le port 8081, on peut le voir sur le application.properties
 
 ### Q1.3. Lister les routes et les composants qui sont déjà définis dans machine. Expliquer quelle morceau de configuration empêche l'application de démarrer un serveur web alors que la dépendance sur spring-boot-stater-web est bien présente dans le pom.xml.
 
+Il n'y a pas de route sur machine, son unique composant est le suivant :
+- ConfigurationService
 
 ### Q1.4. Expliquer pourquoi machine affiche Reçoit les messages sur la queue 'queue-machine1' au démarrage. Ce message reflète-il la réalité en l'état ?
 
