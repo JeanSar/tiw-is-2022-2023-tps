@@ -8,6 +8,10 @@
 ## 1. Prise en main du code fourni
 ### Q1.1. Lister les routes et les composants qui sont déjà définis dans chain-manager.
 
+Dans Chain-Manager il y a deux routes : 
+- POST : /voiture/ -> ajouteVoiture()
+- GET : /voiture/ -> getAllVoitures()
+
 
 ### Q1.2. Sur quel port l'application chain-manager écoute-elle ? Où se port est-il configuré ?
 
