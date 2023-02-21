@@ -12,6 +12,18 @@ Dans Chain-Manager il y a deux routes :
 - POST : /voiture/ -> ajouteVoiture()
 - GET : /voiture/ -> getAllVoitures()
 
+Au niveau des composants on retrouve : 
+  - ConfigurationConfirmationReceiver
+  - VoitureController
+  - Statut
+  - StatutInconnuException
+  - voiture
+  - VoitureRepository
+  - MachineService
+  - VoitureService
+  - MachineDTO
+  - VoitureDTO
+
 
 ### Q1.2. Sur quel port l'application chain-manager écoute-elle ? Où se port est-il configuré ?
 
