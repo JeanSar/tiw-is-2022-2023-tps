@@ -34,6 +34,10 @@ Sur le port 8081, on peut le voir sur le application.properties
 Il n'y a pas de route sur machine, son unique composant est le suivant :
 - ConfigurationService
 
+Dans application.properties du module machine, on trouve la ligne suivante : spring.main.web-application-type=none
+
+Le statut NONE signifie que l'application ne doit pas s'exécuter en tant qu'application web et ne doit pas démarrer un serveur web intégré.
+
 ### Q1.4. Expliquer pourquoi machine affiche Reçoit les messages sur la queue 'queue-machine1' au démarrage. Ce message reflète-il la réalité en l'état ?
 
 
