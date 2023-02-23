@@ -3,18 +3,29 @@ package fr.univlyon1.m2tiw.is.chainmanager.services;
 import fr.univlyon1.m2tiw.is.chainmanager.models.Voiture;
 import fr.univlyon1.m2tiw.is.chainmanager.services.dtos.MachineDTO;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 @Slf4j
 @Service
 public class MachineService {
 
+    @Autowired
+    private RestTemplate restTemplate;
+
+    final String ROOT_URI = "http://localhost:8081/machines";
+
     public Collection<MachineDTO> getMachines() {
-        // TODO: TP3 requêter le catalogue à partir du RestTemplate pour récupérer les machines et leur file rabbitmq
-        return new ArrayList<>();
+        log.info("Test getmachine");
+
+        ResponseEntity<MachineDTO[]> response = restTemplate.getForEntity(ROOT_URI, MachineDTO[].class);
+        MachineDTO[] machines = response.getBody();
+        return Arrays.asList(machines);
     }
 
     public void envoieOptionsVoiture(String queueName, Voiture voiture) {
