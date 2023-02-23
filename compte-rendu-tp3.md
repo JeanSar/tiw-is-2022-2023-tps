@@ -40,9 +40,10 @@ Le statut NONE signifie que l'application ne doit pas s'exécuter en tant qu'app
 
 ### Q1.4. Expliquer pourquoi machine affiche Reçoit les messages sur la queue 'queue-machine1' au démarrage. Ce message reflète-il la réalité en l'état ?
 
+Ce message provient du runner de machine, ce n'est pas encore le cas -> TODO : expliquer 
 
 ### Q1.5. chain-manager est configurée pour recevoir des messages. Sur quelle queue va-t-elle les chercher ?
-
+Elle recevra les messages sur la queue 'chainmanager'
 
 ### Q1.6. L'application chain-manager a-t-elle traité le message ? Quelle(s) méthode(s) ont-elles été appelée(s) ? Ajoutez au besoin des logs pour vérifier votre hypothèse.
 
