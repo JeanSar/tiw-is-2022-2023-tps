@@ -18,7 +18,7 @@ public class MachineService {
     @Autowired
     private RestTemplate restTemplate;
 
-    final String ROOT_URI = "http://localhost:8081/machines";
+    final String ROOT_URI = "http://localhost:808O/machine";
 
     public Collection<MachineDTO> getMachines() {
         log.info("Test getmachine");

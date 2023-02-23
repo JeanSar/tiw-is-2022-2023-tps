@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ChainManagerApplication {
 
 	public static void main(String[] args) {
+		System.out.println("Application launched");
 		SpringApplication.run(ChainManagerApplication.class, args);
 	}
 
