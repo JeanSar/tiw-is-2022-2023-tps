@@ -47,6 +47,9 @@ Elle recevra les messages sur la queue 'chainmanager'
 
 ### Q1.6. L'application chain-manager a-t-elle traité le message ? Quelle(s) méthode(s) ont-elles été appelée(s) ? Ajoutez au besoin des logs pour vérifier votre hypothèse.
 
+Oui le message est bien traité.
+C'est la méthode ConfiguratoinConfirmationReceiver.receive() qui est appelée.
+Le seul endroit où il y a un RabbitListener est dans cette méthode.
 
 ## 2. Clients REST
 
