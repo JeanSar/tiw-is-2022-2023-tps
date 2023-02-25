@@ -1,5 +1,6 @@
 package fr.univlyon1.m2tiw.is.chainmanager;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -7,14 +8,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.Duration;
-
+@Slf4j
 @Configuration
-@ComponentScan(basePackages = "fr.univlyon1.m2tiw.is.chainmanager")
-public class RestClientConfig {
+@ComponentScan
+public class RestTemplateClient {
 
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
-        System.out.println("RestTemplate créé");
+        log.info("RestTemplate initialized");
         return builder
                 .setConnectTimeout(Duration.ofMillis(3000))
                 .setReadTimeout(Duration.ofMillis(3000))

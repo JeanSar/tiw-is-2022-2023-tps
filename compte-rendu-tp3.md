@@ -55,6 +55,25 @@ Le seul endroit où il y a un RabbitListener est dans cette méthode.
 
 
 ### Q2.1. Quelles modifications avez-vous apporté à chain-manager ? Copier/coller le code de getMachines.
+Nous avons ajouté une classe de configuration RestTemplateClient définissant le bean restTemplate.
+Nous avons également ajouté une propriété autowired restTemplate dans MachineServices.
+```java
+public Collection<MachineDTO> getMachines() {
+    try {
+        log.info(String.format("GET %s", ROOT_URI));
+        ResponseEntity<MachineDTO[]> response = restTemplate.getForEntity(ROOT_URI, MachineDTO[].class);
+        MachineDTO[] machines = response.getBody();
+        if(machines == null) {
+            return null;
+        } else {
+            return Arrays.asList(machines);
+        }
+    } catch (RestClientException e) {
+        log.error(e.getMessage());
+        return null;
+    }
+}
+```
 
 ### Q2.2. Y a-t-il besoin d'informations additionnelles pour réaliser ces changements ? Si oui, lesquelles ?
 
