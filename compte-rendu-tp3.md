@@ -79,11 +79,15 @@ public Collection<MachineDTO> getMachines() {
 
 ### Q2.2. Y a-t-il besoin d'informations additionnelles pour réaliser ces changements ? Si oui, lesquelles ?
 
+Oui, il est nécéssaire de rajouter le champ 'queue' dans le modèle de Machine de catalogue. 
 
 ### Q2.3. Quels problèmes risquent de se poser avec la gestion des informations des machines du catalogue telle qu'elle est proposée ?
 
+Les id des machines sont autoincrémentés au niveau du catalogue. 
+
 ### Q2.4. Quels changements avez-vous apporté aux applications et enquoi ces changements résolvent-ils le problème précédent ?
 
+On explique comment on gère les ids.
 
 ## 3. Réception de message par les machines
 
