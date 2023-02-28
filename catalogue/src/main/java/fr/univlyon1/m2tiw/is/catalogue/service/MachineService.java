@@ -34,7 +34,7 @@ public class MachineService {
     @Transactional
     public MachineDTO createMachine(MachineDTO machineDTO) {
         Machine machine = machineDTO.toMachine();
-        machine.setId(null); // on s'assure que c'est le support de persistence qui donne l'id car c'est un serial/autoincrement
+        // machine.setId(null); // on s'assure que c'est le support de persistence qui donne l'id car c'est un serial/autoincrement
         machine = machineRepository.save(machine);
         return new MachineDTO(machine);
     }
