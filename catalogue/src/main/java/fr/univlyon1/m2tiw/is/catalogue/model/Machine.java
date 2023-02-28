@@ -26,16 +26,11 @@ public class Machine {
     public Machine() {
     }
 
-    public Machine(Long id, String modele) {
+    public Machine(Long id, String modele, String queue) {
         this.id = id;
         this.modele = modele;
-    }
-
-    public Machine(Long id, String queue) {
-        this.id = id;
         this.queue = queue;
     }
-
 
     public Long getId() {
         return id;

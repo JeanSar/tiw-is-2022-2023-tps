@@ -1,6 +1,8 @@
 # Compte Rendu TP3
 ## Communication par messages asynchrone avec RabbitMQ
 
+http://localhost:8081/swagger-ui/index.html
+
 ### Q0.1. Indiquer les noms, prénoms et numéros d'étudiants du binôme.
 - Jean Saury p1805563
 - Laetitia Castaldo p1710690

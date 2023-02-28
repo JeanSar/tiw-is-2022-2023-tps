@@ -13,14 +13,12 @@ public class MachineDTO {
     public MachineDTO() {
     }
 
-    public MachineDTO(Long id, String modele) {
+    public MachineDTO(Long id, String modele, String queue) {
         this.id = id;
         this.modele = modele;
-    }
-    public MachineDTO(Long id, String queue) {
-        this.id = id;
         this.queue = queue;
     }
+
     public MachineDTO(Machine machine) {
         this.id = machine.getId();
         this.modele = machine.getModele();
@@ -28,7 +26,7 @@ public class MachineDTO {
     }
 
     public Machine toMachine() {
-        return new Machine(id, modele);
+        return new Machine(id, modele, queue);
     }
 
     @Override
