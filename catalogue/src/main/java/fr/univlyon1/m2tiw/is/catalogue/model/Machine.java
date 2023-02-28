@@ -15,7 +15,6 @@ import java.util.Collection;
 @Entity
 public class Machine {
     @Id
-    @GeneratedValue
     private Long id;
     private String modele;
     private String queue;

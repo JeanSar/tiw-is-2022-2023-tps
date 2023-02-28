@@ -32,7 +32,8 @@ public class ConfigurationServiceTest {
 
     @BeforeEach
     public void setup() {
-        m1 = new Machine(null, TN + " modele 1", null);
+        long test = 0;
+        m1 = new Machine(test, TN + " modele 1", null);
         machineRepository.save(m1);
         o1 = new Option(TN + " option 1");
         optionRepository.save(o1);
