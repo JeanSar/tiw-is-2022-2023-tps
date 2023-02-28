@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 public class MachineDTO {
     public Long id;
     public String modele;
+    public String queue;
     public Collection<String> options;
-
     public MachineDTO() {
     }
 
@@ -17,7 +17,10 @@ public class MachineDTO {
         this.id = id;
         this.modele = modele;
     }
-
+    public MachineDTO(Long id, String queue) {
+        this.id = id;
+        this.queue = queue;
+    }
     public MachineDTO(Machine machine) {
         this.id = machine.getId();
         this.modele = machine.getModele();
@@ -47,6 +50,14 @@ public class MachineDTO {
 
     public void setModele(String modele) {
         this.modele = modele;
+    }
+
+    public void setQueue(String queue) {
+        this.queue = queue;
+    }
+
+    public String getQueue() {
+        return queue;
     }
 
     public Collection<String> getOptions() {

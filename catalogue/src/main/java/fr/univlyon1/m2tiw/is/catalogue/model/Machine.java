@@ -18,6 +18,7 @@ public class Machine {
     @GeneratedValue
     private Long id;
     private String modele;
+    private String queue;
 
     @OneToMany(mappedBy = "machine")
     private Collection<Configuration> configurations = new ArrayList<>();
@@ -29,6 +30,12 @@ public class Machine {
         this.id = id;
         this.modele = modele;
     }
+
+    public Machine(Long id, String queue) {
+        this.id = id;
+        this.queue = queue;
+    }
+
 
     public Long getId() {
         return id;
@@ -45,6 +52,14 @@ public class Machine {
     public void setModele(String modele) {
         this.modele = modele;
     }
+
+    public String getQueue() {
+        return queue;
+    }
+    public void setQueue(String queue) {
+        this.queue = queue;
+    }
+
 
     public Collection<Configuration> getConfigurations() {
         return configurations;

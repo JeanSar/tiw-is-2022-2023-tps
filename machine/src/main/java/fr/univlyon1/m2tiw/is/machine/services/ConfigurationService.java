@@ -8,7 +8,12 @@ public class ConfigurationService {
     @Value("${tiw.is.machine.queue}")
     private String queueName;
 
+    @Value("${tiw.is.machine.id}")
+    private Long id;
+
     public String getQueueName() {
         return queueName;
     }
+
+    public Long getId() { return id; }
 }
