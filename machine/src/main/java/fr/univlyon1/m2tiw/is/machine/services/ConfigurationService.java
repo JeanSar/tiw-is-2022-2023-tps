@@ -1,5 +1,6 @@
 package fr.univlyon1.m2tiw.is.machine.services;
 
+import fr.univlyon1.m2tiw.is.chainmanager.services.dtos.VoitureDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

@@ -17,24 +17,19 @@ Dans Chain-Manager il y a deux routes :
 Au niveau des composants on retrouve : 
   - ConfigurationConfirmationReceiver
   - VoitureController
-  - Statut
-  - StatutInconnuException
-  - voiture
   - VoitureRepository
   - MachineService
   - VoitureService
-  - MachineDTO
-  - VoitureDTO
-
 
 ### Q1.2. Sur quel port l'application chain-manager écoute-elle ? Où se port est-il configuré ?
 
-Sur le port 8081, on peut le voir sur le application.properties
+Sur le port 8081, on peut le voir dans /chain-manager/main/resources/application.properties
 
 ### Q1.3. Lister les routes et les composants qui sont déjà définis dans machine. Expliquer quelle morceau de configuration empêche l'application de démarrer un serveur web alors que la dépendance sur spring-boot-stater-web est bien présente dans le pom.xml.
 
-Il n'y a pas de route sur machine, son unique composant est le suivant :
+Il n'y a pas de route sur machine, au niveau des composants on retrouve :
 - ConfigurationService
+- Runner.java
 
 Dans application.properties du module machine, on trouve la ligne suivante : spring.main.web-application-type=none
 
@@ -83,16 +78,30 @@ Oui, il est nécéssaire de rajouter le champ 'queue' dans le modèle de Machine
 
 ### Q2.3. Quels problèmes risquent de se poser avec la gestion des informations des machines du catalogue telle qu'elle est proposée ?
 
-Les id des machines sont autoincrémentés au niveau du catalogue. 
+Le souci réside dans le fait que le catalogue de machines ne contient que les attributs "id" et "modele", sans inclure l'attribut "queue".
+Cela signifie que les informations stockées dans la table "machine" de la base de données ne sont pas compatibles avec les informations requises par l'application "Catalogue".
+Pour résoudre ce problème, il est nécessaire de modifier l'application "Catalogue" afin d'inclure l'attribut "queue" dans la table "machine".
 
 ### Q2.4. Quels changements avez-vous apporté aux applications et enquoi ces changements résolvent-ils le problème précédent ?
 
-On explique comment on gère les ids.
+- Nous avons dû changer la class Machine de l'application ``catalogue`` afin quel ajoute l'attribut ``queue`` dans la table machine.
+- Ajout dans ``application.properties`` un ``id`` pour identifier si cette machine existe déjà ou non sur l'api en requêtant sur ``catalogue``.
+- Ajout d'une class ``MachineDTO`` et ``MachineService`` dans l'application ``machine`` pour manipuler les donner de la base sur la table machine plus simplement.
+- Modification du ``Runner`` pour appeler la méthode ``getMachineCatalogue`` de la class ``MachineService`` qui crée la machine si elle n'existe pas sinon la récupère si elle existe
 
 ## 3. Réception de message par les machines
 
 ### Q3.1. Quelles erreurs peuvent se produire lors de la gestion du JSON ?Quels problèmes se posent si on souhaite gérer correctement ces erreurs ?
 
+Le problème est que le message reçu par RabbitMQ ne correspond pas aux champs de l'objet VoitureDTO, ce qui rend impossible la désérialisation en un objet VoitureDTO. 
+Pour que cela fonctionne, le payload doit inclure l'identifiant de la voiture ainsi que les options qui existent dans la base de données.
+Voici un exemple de message qui pourrait être envoyé :
+```json
+{
+    "id":1, 
+    "options":["opt1","opt2"]
+}
+```
 
 ### Q3.2 Copier/coller le code de votre @RabbitListener
 
