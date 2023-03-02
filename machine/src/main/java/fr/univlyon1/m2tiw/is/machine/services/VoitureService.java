@@ -16,13 +16,14 @@ public class VoitureService {
     @Autowired
     private RestTemplate restTemplate;
 
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
     final String ROOT_URI = "http://localhost:8080/machine";
     public void reconfigure(VoitureDTO payload) throws JsonProcessingException {
         log.info(payload.toString());
         try {
             for(String option: payload.options){
                 ConfigurationDTO config = restTemplate.getForObject(ROOT_URI + "/" + option , ConfigurationDTO.class);
-                ObjectMapper objectMapper = null;
                 log.info(objectMapper.writeValueAsString(config));
             }
         } catch (Exception e) {
