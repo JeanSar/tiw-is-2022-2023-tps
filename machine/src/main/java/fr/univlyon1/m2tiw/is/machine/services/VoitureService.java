@@ -22,7 +22,7 @@ public class VoitureService {
         log.info(payload.toString());
         try {
             for(String option: payload.options){
-                ConfigurationDTO config = restTemplate.getForObject("http://localhost:8080/configuration/" + option , ConfigurationDTO.class);
+                ConfigurationDTO config = restTemplate.getForObject("http://localhost:8080/configuration/" + payload.getId() + "/" + option , ConfigurationDTO.class);
                 log.info(objectMapper.writeValueAsString(config));
             }
         } catch (Exception e) {

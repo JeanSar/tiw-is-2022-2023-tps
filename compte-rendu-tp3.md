@@ -104,6 +104,32 @@ Voici un exemple de message qui pourrait être envoyé :
 ```
 
 ### Q3.2 Copier/coller le code de votre @RabbitListener
+```java
+@Slf4j
+// Rmq: injection du nom de la queue à partir de la configuration définie dans application.properties
+@RabbitListener(queues = "${tiw.is.machine.queue}")
+@Component
+public class ConfigurationConfirmationReceiver {
+
+    @Autowired
+    private VoitureService voitureService;
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+    @RabbitHandler
+    public void receive(String message) throws JsonMappingException, JsonProcessingException {
+        VoitureDTO payload = objectMapper.readValue(message, VoitureDTO.class);
+        voitureService.reconfigure(payload);
+        log.info("Received message <" + message + ">");
+    }
+
+    @RabbitHandler
+    public void receive(byte[] message) throws JsonMappingException, JsonProcessingException{
+        log.info("Received byte <" + message + ">");
+        receive(new String(message, StandardCharsets.UTF_8));
+    }
+}
+```
 
 ## 4. Envoi de message par chain-manager et machine
 

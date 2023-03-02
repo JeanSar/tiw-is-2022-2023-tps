@@ -28,6 +28,7 @@ public class ConfigurationConfirmationReceiver {
     public void receive(String message) throws JsonMappingException, JsonProcessingException {
         VoitureDTO payload = objectMapper.readValue(message, VoitureDTO.class);
         voitureService.reconfigure(payload);
+        log.info("Received message <" + message + ">");
     }
 
     @RabbitHandler
