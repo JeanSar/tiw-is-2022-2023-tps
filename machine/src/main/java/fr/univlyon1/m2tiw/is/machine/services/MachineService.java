@@ -25,8 +25,8 @@ public class MachineService {
 
     public MachineDTO getMachine(Long id) {
         try {
-            log.info(String.format("GET %s", ROOT_URI));
             URI uri =  new URI(ROOT_URI + "/" + id);
+            log.info(String.format("GET %s", uri));
             return restTemplate.getForObject(uri, MachineDTO.class);
         } catch (RestClientException | URISyntaxException e) {
             log.error(e.getMessage());
@@ -40,7 +40,7 @@ public class MachineService {
             headers.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<MachineDTO> request =
                     new HttpEntity<MachineDTO>(newMachine, headers);
-            log.info(String.format("GET %s", ROOT_URI));
+            log.info(String.format("POST %s", ROOT_URI));
             MachineDTO machine = restTemplate.postForObject(ROOT_URI, request, MachineDTO.class);
             return machine;
         } catch (RestClientException e) {
