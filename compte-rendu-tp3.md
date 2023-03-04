@@ -135,6 +135,21 @@ public class ConfigurationConfirmationReceiver {
 
 ### Q4.1 Copier/coller le code de la méthode envoieOptionsVoiture
 
+```java
+public void envoieOptionsVoiture(String queueName, Voiture voiture) {
+    Collection<String> options = voiture.getOptions();
+    log.info("Envoi des {} options '{}' pour la voiture {} sur la queue '{}'",
+            options.size(), options, voiture.getId(), queueName);
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+        String message =  mapper.writeValueAsString(voiture);
+        this.rabbitTemplate.convertAndSend(queueName, message);
+    } catch (JsonProcessingException | AmqpException e) {
+        log.error(e.getMessage());
+    }
+}
+```
+
 ### Q4.2 Seul le premier appel déclenche la production de message(s) dans RabbitMQ. Pourquoi ?
 
 ### Q4.3. Quelles sont les informations transmises lors de la confirmation de reconfiguration ? Avez-vous du ajouter des données dans la demande de reconfiguration ? Si oui, lesquelles ?
