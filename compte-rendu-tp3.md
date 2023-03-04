@@ -101,7 +101,7 @@ Voici un exemple de message qui pourrait être envoyé :
 }
 ```
 
-### Q3.2 Copier/coller le code de votre @RabbitListener
+### Q3.2. Copier/coller le code de votre @RabbitListener
 ```java
 @Slf4j
 // Rmq: injection du nom de la queue à partir de la configuration définie dans application.properties
@@ -131,7 +131,7 @@ public class ConfigurationConfirmationReceiver {
 
 ## 4. Envoi de message par chain-manager et machine
 
-### Q4.1 Copier/coller le code de la méthode envoieOptionsVoiture
+### Q4.1. Copier/coller le code de la méthode envoieOptionsVoiture
 
 ```java
 public void envoieOptionsVoiture(String queueName, Voiture voiture) {
@@ -148,7 +148,7 @@ public void envoieOptionsVoiture(String queueName, Voiture voiture) {
 }
 ```
 
-### Q4.2 Seul le premier appel déclenche la production de message(s) dans RabbitMQ. Pourquoi ?
+### Q4.2. Seul le premier appel déclenche la production de message(s) dans RabbitMQ. Pourquoi ?
 
 Lors des appels suivants de ``demarreConfigurationVoiture()``, le test ``reconfigurationEnCours()`` 
 ne passe plus car la première voiture est toujours avec un statut ``DEMARRE``. De ce fait, on envoi plus de messages 
