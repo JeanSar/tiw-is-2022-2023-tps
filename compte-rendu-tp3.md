@@ -1,8 +1,6 @@
 # Compte Rendu TP3
 ## Communication par messages asynchrone avec RabbitMQ
 
-http://localhost:8081/swagger-ui/index.html
-
 ### Q0.1. Indiquer les noms, prénoms et numéros d'étudiants du binôme.
 - Jean Saury p1805563
 - Laetitia Castaldo p1710690
@@ -166,7 +164,7 @@ Les informations transmises lors de la confirmation de reconfiguration sont la v
 }
 ```
 Nous n'avons pas eu la nécéssité d'ajouter des données dans la demande de reconfiguration car le champs statut 
-était déjà inclus dans le message.
+était déjà inclus dans le message. Nous avons par contre dû mettre à jour VoitureDTO dans le service Machine pour ajouter le statut. 
 
 ## 5. Synchronisation et démarrage de la configuration suivante
 
