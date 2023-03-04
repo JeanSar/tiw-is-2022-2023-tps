@@ -157,7 +157,16 @@ ne passe plus car la première voiture est toujours avec un statut ``DEMARRE``. 
 dans rabbitMQ.
 
 ### Q4.3. Quelles sont les informations transmises lors de la confirmation de reconfiguration ? Avez-vous du ajouter des données dans la demande de reconfiguration ? Si oui, lesquelles ?
-
+Les informations transmises lors de la confirmation de reconfiguration sont la voiture au format JSON avec le statut mis à jour.
+```json
+{
+  "id": 1,
+  "options": ["opt1","opt2"],
+  "statut": "TERMINE"
+}
+```
+Nous n'avons pas eu la nécéssité d'ajouter des données dans la demande de reconfiguration car le champs statut 
+était déjà inclus dans le message.
 
 ## 5. Synchronisation et démarrage de la configuration suivante
 
