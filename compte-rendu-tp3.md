@@ -170,6 +170,10 @@ Nous n'avons pas eu la nécéssité d'ajouter des données dans la demande de re
 
 ### Q5.1. Quel champ de Voiture dans chain-manager est particulièrement utile ici ? A quel moment ce champ doit-il être réellement initialisé ?
 
+C'est le champ ``machineJobs`` qui nous est très utile dans ce cas présent.
+Les valeurs de la ``Map`` doivent être initialisées lors de l'appel des methodes ``envoieOptionsVoiture()``
+dans la méthode ``envoieOptions()`` de VoitureService. 
+
 ### Q5.2. Avez-vous du ajouter des informations dans certains messages ? Si oui, lesquelles ?
 
 ### Q5.3 Normalement, la voiture ne passe pas au statut TERMINE. Pourquoi ? Élaborer une stratégie qui permettrait de mitiger (à défaut de faire disparaitre) le problème.
