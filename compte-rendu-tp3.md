@@ -152,6 +152,10 @@ public void envoieOptionsVoiture(String queueName, Voiture voiture) {
 
 ### Q4.2 Seul le premier appel déclenche la production de message(s) dans RabbitMQ. Pourquoi ?
 
+Lors des appels suivants de ``demarreConfigurationVoiture()``, le test ``reconfigurationEnCours()`` 
+ne passe plus car la première voiture est toujours avec un statut ``DEMARRE``. De ce fait, on envoi plus de messages 
+dans rabbitMQ.
+
 ### Q4.3. Quelles sont les informations transmises lors de la confirmation de reconfiguration ? Avez-vous du ajouter des données dans la demande de reconfiguration ? Si oui, lesquelles ?
 
 
