@@ -22,6 +22,7 @@ public class MachineDTO {
     public MachineDTO(Machine machine) {
         this.id = machine.getId();
         this.modele = machine.getModele();
+        this.queue = machine.getQueue();
         this.options = machine.getConfigurations().stream().map(cfg -> cfg.getOption().getNom()).collect(Collectors.toSet());
     }
 

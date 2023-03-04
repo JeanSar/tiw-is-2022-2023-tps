@@ -1,8 +1,12 @@
 package fr.univlyon1.m2tiw.is.chainmanager.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.univlyon1.m2tiw.is.chainmanager.models.Voiture;
 import fr.univlyon1.m2tiw.is.chainmanager.services.dtos.MachineDTO;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,6 +21,8 @@ import java.util.Collection;
 public class MachineService {
     @Autowired
     private RestTemplate restTemplate;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     final String ROOT_URI = "http://localhost:8080/machine";
 
@@ -40,8 +46,12 @@ public class MachineService {
         Collection<String> options = voiture.getOptions();
         log.info("Envoi des {} options '{}' pour la voiture {} sur la queue '{}'",
                 options.size(), options, voiture.getId(), queueName);
-        // TODO: TP3 utiliser RabbitTemplate pour envoyer une demande
-        //  de reconfiguration sur la queue indiquée
-
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            String message =  mapper.writeValueAsString(voiture);
+            this.rabbitTemplate.convertAndSend(queueName, message);
+        } catch (JsonProcessingException | AmqpException e) {
+            log.error(e.getMessage());
+        }
     }
 }

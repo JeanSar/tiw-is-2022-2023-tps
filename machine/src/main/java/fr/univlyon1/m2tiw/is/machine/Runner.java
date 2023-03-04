@@ -2,7 +2,6 @@ package fr.univlyon1.m2tiw.is.machine;
 
 import fr.univlyon1.m2tiw.is.machine.services.ConfigurationService;
 import fr.univlyon1.m2tiw.is.machine.services.MachineService;
-import fr.univlyon1.m2tiw.is.machine.services.VoitureService;
 import fr.univlyon1.m2tiw.is.machine.services.dtos.MachineDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -13,15 +12,11 @@ import org.springframework.stereotype.Component;
 public class Runner implements CommandLineRunner {
     private ConfigurationService configurationService;
     private MachineService machineService;
-    private VoitureService voitureService;
-
     public Runner(ConfigurationService configurationService,
-                  MachineService machineService,
-                  VoitureService voitureService
+                  MachineService machineService
     ) {
         this.configurationService = configurationService;
         this.machineService = machineService;
-        this.voitureService = voitureService;
     }
 
     @Override
