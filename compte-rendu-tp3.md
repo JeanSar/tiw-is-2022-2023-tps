@@ -37,7 +37,7 @@ Le statut NONE signifie que l'application ne doit pas s'exécuter en tant qu'app
 
 ### Q1.4. Expliquer pourquoi machine affiche Reçoit les messages sur la queue 'queue-machine1' au démarrage. Ce message reflète-il la réalité en l'état ?
 
-Ce message provient du runner de machine, ce n'est pas encore le cas -> TODO : expliquer 
+Ce message provient du runner de machine, ce n'est pas encore le cas car le service ne possède pas de rabbit-listener sur la queue.
 
 ### Q1.5. chain-manager est configurée pour recevoir des messages. Sur quelle queue va-t-elle les chercher ?
 Elle recevra les messages sur la queue 'chainmanager'
@@ -86,7 +86,7 @@ Pour résoudre ce problème, il est nécessaire de modifier l'application "Catal
 
 - Nous avons dû changer la class Machine de l'application ``catalogue`` afin quel ajoute l'attribut ``queue`` dans la table machine.
 - Ajout dans ``application.properties`` un ``id`` pour identifier si cette machine existe déjà ou non sur l'api en requêtant sur ``catalogue``.
-- Ajout d'une class ``MachineDTO`` et ``MachineService`` dans l'application ``machine`` pour manipuler les donner de la base sur la table machine plus simplement.
+- Ajout d'une classe ``MachineDTO`` et ``MachineService`` dans l'application ``machine`` pour manipuler les données de la base sur la table machine plus simplement.
 - Modification du ``Runner`` pour appeler la méthode ``getMachineCatalogue`` de la class ``MachineService`` qui crée la machine si elle n'existe pas sinon la récupère si elle existe
 
 ## 3. Réception de message par les machines

@@ -38,9 +38,10 @@ public class MachineService {
 
     public void envoieOptionsVoiture(String queueName, Voiture voiture) {
         Collection<String> options = voiture.getOptions();
-        log.info("Envoi de des {} options '{}' pour la voiture {} sur la queue '{}'",
+        log.info("Envoi des {} options '{}' pour la voiture {} sur la queue '{}'",
                 options.size(), options, voiture.getId(), queueName);
         // TODO: TP3 utiliser RabbitTemplate pour envoyer une demande
         //  de reconfiguration sur la queue indiquée
+
     }
 }
