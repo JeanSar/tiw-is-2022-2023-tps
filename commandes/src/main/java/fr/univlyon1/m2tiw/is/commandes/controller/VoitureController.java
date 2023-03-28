@@ -6,6 +6,8 @@ import fr.univlyon1.m2tiw.is.commandes.model.Option;
 import fr.univlyon1.m2tiw.is.commandes.model.Voiture;
 import fr.univlyon1.m2tiw.is.commandes.resources.VoitureResource;
 import fr.univlyon1.m2tiw.is.commandes.vue.Vue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 import java.util.Map;
@@ -14,6 +16,7 @@ public class VoitureController extends AbstractController {
 
     private final VoitureResource voitureResource;
     private final Vue vue;
+    private static final Logger LOG = LoggerFactory.getLogger(VoitureController.class);
 
 
     public VoitureController(VoitureResource _voitureService, Vue _vue) {
@@ -41,6 +44,7 @@ public class VoitureController extends AbstractController {
     }
 
     private String creerVoiture(Map<String, Object> parametres){
+        LOG.info("creerVoiture("+parametres+")");
         String modeleJSON = (String) parametres.get("modele");
         if(null == modeleJSON)
             return vue.renderParametreNotFound("modele");
@@ -55,6 +59,7 @@ public class VoitureController extends AbstractController {
     }
 
     private String ajouterConfiguration(Map<String, Object> parametres) {
+        LOG.info("ajouterConfiguration("+parametres+")");
         String voitureJSON = (String) parametres.get("voiture");
         if(null == voitureJSON)
             return vue.renderParametreNotFound("voiture");
@@ -74,6 +79,7 @@ public class VoitureController extends AbstractController {
     }
 
     private String supprimerConfiguration(Map<String, Object> parametres) {
+        LOG.info("supprimerConfiguration("+parametres+")");
         String voitureJSON = (String) parametres.get("voiture");
         if(null == voitureJSON)
             return vue.renderParametreNotFound("voiture");

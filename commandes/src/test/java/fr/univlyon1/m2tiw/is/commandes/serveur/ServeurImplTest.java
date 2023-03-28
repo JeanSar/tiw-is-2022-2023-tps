@@ -7,6 +7,8 @@ import fr.univlyon1.m2tiw.is.commandes.model.Option;
 import fr.univlyon1.m2tiw.is.commandes.model.Voiture;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -16,6 +18,8 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ServeurImplTest {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ServeurImplTest.class);
     private static Serveur serveurImpl;
     private static int counter = 0;
 
@@ -41,6 +45,7 @@ class ServeurImplTest {
     }
     @Test
     void getAllOptions() {
+        LOG.info("//////////// getAllOptions() /////////////");
         ObjectMapper mapper = new ObjectMapper();
         String optionsJSON = (String) serveurImpl.processRequest("option","get", null);
         assertNotNull(optionsJSON);
@@ -55,6 +60,7 @@ class ServeurImplTest {
     }
     @Test
     void creerVoiture() {
+        LOG.info("//////////// ajouterVoiture() /////////////");
         try {
             ObjectMapper mapper = new ObjectMapper();
             Voiture voiture;
@@ -70,6 +76,7 @@ class ServeurImplTest {
 
     @Test
     void ajouterConfiguration() {
+        LOG.info("//////////// ajouterConfiguration() /////////////");
         try {
             ObjectMapper mapper = new ObjectMapper();
             Voiture voiture;
@@ -96,6 +103,7 @@ class ServeurImplTest {
 
     @Test
     void supprimerConfiguration() {
+        LOG.info("//////////// supprimerConfiguration() /////////////");
         try {
             ObjectMapper mapper = new ObjectMapper();
             Voiture voiture;
@@ -131,7 +139,9 @@ class ServeurImplTest {
     }
     @Test
     void ajouterVoiture() {
+        LOG.info("//////////// ajouterVoiture() /////////////");
         try {
+
             ObjectMapper mapper = new ObjectMapper();
             Voiture voiture;
             String voitureJSON = createVoiture();
@@ -153,6 +163,7 @@ class ServeurImplTest {
     }
     @Test
     void supprimerVoiture() {
+        LOG.info("//////////// supprimerVoiture() /////////////");
         try {
             ObjectMapper mapper = new ObjectMapper();
             Voiture voiture;
@@ -181,6 +192,7 @@ class ServeurImplTest {
 
     @Test
     void validerCommandeCourante(){
+        LOG.info("//////////// validerCommandeCourante() /////////////");
         try {
             ObjectMapper mapper = new ObjectMapper();
             Voiture voiture;
@@ -261,6 +273,7 @@ class ServeurImplTest {
 
     @Test
     void validerCommandeCouranteVide(){
+        LOG.info("//////////// validerCommandeCouranteVide() /////////////");
         try {
             ObjectMapper mapper = new ObjectMapper();
 

@@ -7,6 +7,8 @@ import fr.univlyon1.m2tiw.is.commandes.resources.CommandeArchiveeResource;
 import fr.univlyon1.m2tiw.is.commandes.resources.CommandeCouranteResource;
 import fr.univlyon1.m2tiw.is.commandes.services.*;
 import fr.univlyon1.m2tiw.is.commandes.vue.Vue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 import java.util.Map;
@@ -16,6 +18,8 @@ public class CommandeController extends AbstractController {
     private final CommandeCouranteResource commandeCouranteResource;
     private final CommandeCouranteService commandeCouranteService;
     private final Vue vue;
+    private static final Logger LOG = LoggerFactory.getLogger(CommandeController.class);
+
 
 
     public CommandeController(CommandeArchiveeResource _commandeArchiveeResource,
@@ -55,6 +59,7 @@ public class CommandeController extends AbstractController {
     }
 
     private String ajouterVoiture(Map<String, Object> parametres) {
+        LOG.info("ajouterVoiture("+parametres+")");
         String voitureIdJSON = (String) parametres.get("id");
         if(null == voitureIdJSON)
             return vue.renderParametreNotFound("id");
@@ -70,6 +75,7 @@ public class CommandeController extends AbstractController {
     }
 
     private String supprimerVoiture(Map<String, Object> parametres) {
+        LOG.info("supprimerVoiture("+parametres+")");
         String voitureIdJSON = (String) parametres.get("id");
         if(null == voitureIdJSON)
             return vue.renderParametreNotFound("id");
@@ -84,6 +90,7 @@ public class CommandeController extends AbstractController {
         return vue.render();
     }
     private String validerCommandeCourante()  {
+        LOG.info("validerCommandeCourante()");
         try {
             return vue.render(commandeCouranteResource.validerCommandeCourante());
         } catch ( SQLException | NotFoundException e) {
@@ -95,6 +102,7 @@ public class CommandeController extends AbstractController {
     }
 
     private String getCommande(Map<String, Object> parametres) {
+        LOG.info("getCommande("+parametres+")");
         String commandeIdJSON = (String) parametres.get("id");
         if(null == commandeIdJSON)
             return vue.renderParametreNotFound("id");
